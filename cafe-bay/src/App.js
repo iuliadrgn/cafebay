@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { createGlobalStyle } from "styled-components";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background-color: #facdaa;
+    font-family: 'Comfortaa', cursive;
+    }
+    
+    h1, h2, h3 {
+     font-family: 'Abril Fatface', cursive;
+  }
+`
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+          <h1>Cafe Bay</h1>
+        <GlobalStyle/>
+        <div>coffee</div>
+        </>
+
   );
 }
 
