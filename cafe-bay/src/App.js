@@ -1,9 +1,12 @@
 import React from 'react';
 import { createGlobalStyle } from "styled-components";
+import {Navbar} from "./Navbar/Navbar";
+import {warm_white} from "./styles/colors";
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background-color: #facdaa;
+    margin: 0;
+    background-color: #fff6ed;
     font-family: 'Comfortaa', cursive;
     }
     
@@ -16,8 +19,9 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
       <>
-          <h1>Cafe Bay</h1>
+
         <GlobalStyle/>
+          <Navbar/>
         <div>coffee</div>
         </>
 
