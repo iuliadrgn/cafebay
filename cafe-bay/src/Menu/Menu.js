@@ -9,7 +9,7 @@ height: 1000px;
 margin: 15px 1000px 15px 20px;
 `;
 
-export function Menu(){
+export function Menu({setOpenCoffee}){
 return (
     <MenuStyled>
     {Object.entries(coffees).map(([sectionName, coffees]) => (
@@ -17,7 +17,10 @@ return (
             <h1> {sectionName} </h1>
             <CoffeeGrid>
                 {coffees.map(coffee => (
-                <Coffee image={coffee.img}>
+                <Coffee image={coffee.img}
+                onClick={() => {
+                    setOpenCoffee(coffee);
+                }}>
                   <CoffeeLabel>{coffee.name}</CoffeeLabel>
                 </Coffee>
             ))}

@@ -18,7 +18,7 @@ text-shadow: 1px 2px black;
 export function Navbar(){
     return <NavbarStyled>
      <Logo>
-         Cafe Bay☕
+         Cafe Bay<span role="img" aria-label="coffee">☕</span>
      </Logo>
     </NavbarStyled>
 }

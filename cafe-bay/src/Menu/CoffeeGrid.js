@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import {Title} from "../styles/titles";
 
 export const CoffeeGrid = styled.div`
 display: grid;
