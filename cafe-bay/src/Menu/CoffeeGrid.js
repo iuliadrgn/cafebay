@@ -22,9 +22,14 @@ background-image: ${({image}) => `url(${image});`}
 background-size: cover;
 background-position: center;
 border-radius : 7px;
+margin-top:5px;
+transition-property: box-shadow margin-top filter;
+transition-duration: .1s
 box-shadow: 0px 0px 3px 0px #542a1a;
 &:hover {
 cursor: pointer;
-opacity: 0.7;
+filter: contrast(80%);
+margin-top: 0px;
+box-shadow: 0px 0px 2px 0px #542a1a;
 }
 `
