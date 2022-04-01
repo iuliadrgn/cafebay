@@ -2,6 +2,8 @@ import React from 'react';
 import { createGlobalStyle } from "styled-components";
 import {Navbar} from "./Navbar/Navbar";
 import {warm_white} from "./styles/colors";
+import {Banner} from "./Banner/Banner";
+import {Menu} from "./Menu/Menu";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -11,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     }
     
     h1, h2, h3 {
-     font-family: 'Abril Fatface', cursive;
+     font-family: 'Lobster Two', cursive;
   }
 `
 
@@ -22,6 +24,8 @@ function App() {
 
         <GlobalStyle/>
           <Navbar/>
+          <Banner></Banner>
+          <Menu/>
         <div>coffee</div>
         </>
 

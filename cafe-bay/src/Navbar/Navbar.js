@@ -5,7 +5,10 @@ import {Title} from "../styles/titles";
 
 const NavbarStyled = styled.div`
 background-color: ${caramel};
-padding: 15px;
+padding: 8px;
+position: fixed;
+width: 100%;
+z-index: 999;
 `
 const Logo = styled(Title)`
 font-size: 30px;
