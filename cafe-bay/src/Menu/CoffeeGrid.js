@@ -4,7 +4,7 @@ import {Title} from "../styles/titles";
 
 export const CoffeeGrid = styled.div`
 display: grid;
-grid-template-columns: 1fr 1fr;
+grid-template-columns: 1fr 1fr 1fr 1fr;
 gap: 15px;
 `
 export const CoffeeLabel = styled.div`
