@@ -35,7 +35,11 @@ justify-content: space-between;
 `;
 
 export function Order({orders}){
-    return <OrderStyled>
+    const subtotal = orders.reduce((total, order) =>{
+        return total + getPrice(order);
+    }, 0);
+    return (
+        <OrderStyled>
         {orders.length === 0 ?
             ( <OrderContent>
                 ye kam goala komanda
@@ -52,6 +56,13 @@ export function Order({orders}){
                         </OrderItem>
                       </OrderContainer>
                     ))}
+                    <OrderContainer>
+                        <OrderItem>
+                            <div/>
+                            <div>Total</div>
+                            <div>{formatPrice(subtotal)}</div>
+                        </OrderItem>
+                    </OrderContainer>
                 </OrderContent>
             )}
             <DialogFooter>
@@ -61,4 +72,5 @@ export function Order({orders}){
             </DialogFooter>
 
     </OrderStyled>
+    );
 }
