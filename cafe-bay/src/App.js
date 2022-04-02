@@ -6,6 +6,7 @@ import {Banner} from "./Banner/Banner";
 import {Menu} from "./Menu/Menu";
 import{GlobalStyle} from "./styles/GlobalStyle";
 import {CoffeeDialog} from "./CoffeeDialog/CoffeeDialog";
+import {Order} from "./Order/Order";
 
 function App() {
     const[openCoffee, setOpenCoffee] = useState();
@@ -15,6 +16,7 @@ function App() {
         <GlobalStyle/>
           <CoffeeDialog openCoffee={openCoffee} setOpenCoffee={setOpenCoffee}></CoffeeDialog>
           <Navbar/>
+          <Order/>
           <Banner/>
 
           <Menu setOpenCoffee={setOpenCoffee}/>
