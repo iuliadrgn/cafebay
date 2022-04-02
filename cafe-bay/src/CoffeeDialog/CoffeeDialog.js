@@ -2,6 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import {CoffeeLabel} from "../Menu/CoffeeGrid";
 import {caramel} from "../styles/colors";
+import {formatPrice} from "../Data/CoffeeData";
+import {QuantityInput} from "./QuantityInput";
+import {useQuantity} from "../Hooks/useQuantity";
 
 const Dialog = styled.div`
 width: 500px;
@@ -19,6 +22,7 @@ flex-direction:column;
 export const DialogContent = styled.div`
 overflow: auto;
 min-height: 100px;
+padding: 0px 40px;
 `;
 
 export const DialogFooter = styled.div`
@@ -62,16 +66,22 @@ const DialogBannerName = styled(CoffeeLabel)`
 top: 50px;
 font-size: 30px;
 padding: 5px 40px;
-`
+`;
 
-export function CoffeeDialog({openCoffee, setOpenCoffee, setOrders, orders}){
+export function getPrice(order){
+return order.quantity * order.price;
+}
+
+function CoffeeDialogContainer({openCoffee, setOpenCoffee, setOrders, orders}){
+    const quantity = useQuantity(openCoffee && openCoffee.quantity);
     function close() {
         setOpenCoffee();
     }
     if (!openCoffee) return null;
 
     const order = {
-        name: openCoffee.name
+        ...openCoffee,
+        quantity: quantity.value
     }
 
     function addToOrder(){
@@ -87,11 +97,11 @@ export function CoffeeDialog({openCoffee, setOpenCoffee, setOrders, orders}){
                 <DialogBannerName>{openCoffee.name}</DialogBannerName>
             </DialogBanner>
             <DialogContent>
-
+                <QuantityInput quantity={quantity}/>
             </DialogContent>
             <DialogFooter>
                 <ConfirmButton onClick={addToOrder}>
-                    add to order
+                    add to order: {formatPrice(getPrice(order))}
                 </ConfirmButton>
             </DialogFooter>
 
@@ -100,4 +110,9 @@ export function CoffeeDialog({openCoffee, setOpenCoffee, setOrders, orders}){
      </>
 
     );
+}
+
+export function CoffeeDialog(props){
+    if (!props.openCoffee) return null;
+    return <CoffeeDialogContainer {...props}/>
 }

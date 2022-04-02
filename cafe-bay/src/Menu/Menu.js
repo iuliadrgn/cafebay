@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {coffees} from "../Data/CoffeeData";
 import {Coffee, CoffeeGrid, CoffeeLabel} from "./CoffeeGrid";
+import {formatPrice} from "../Data/CoffeeData";
 
 const MenuStyled = styled.div`
 border: 2px black;
@@ -21,7 +22,10 @@ return (
                 onClick={() => {
                     setOpenCoffee(coffee);
                 }}>
-                  <CoffeeLabel>{coffee.name}</CoffeeLabel>
+                    <CoffeeLabel>
+                        <div>{coffee.name}</div>
+                        <div>{formatPrice(coffee.price)}</div>
+                    </CoffeeLabel>
                 </Coffee>
             ))}
             </CoffeeGrid>

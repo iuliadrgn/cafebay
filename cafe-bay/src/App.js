@@ -9,10 +9,12 @@ import {CoffeeDialog} from "./CoffeeDialog/CoffeeDialog";
 import {Order} from "./Order/Order";
 import {useOpenCoffee} from "./Hooks/useOpenCoffee";
 import {useOrders} from "./Hooks/useOrders";
+import {useTitle} from "./Hooks/useTitle";
 
 function App() {
     const openCoffee = useOpenCoffee();
     const orders = useOrders();
+    useTitle({...openCoffee, ...orders});
 
   return (
       <>
