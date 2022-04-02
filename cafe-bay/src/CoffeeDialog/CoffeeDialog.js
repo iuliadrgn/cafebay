@@ -64,12 +64,22 @@ font-size: 30px;
 padding: 5px 40px;
 `
 
-export function CoffeeDialog({openCoffee, setOpenCoffee}){
+export function CoffeeDialog({openCoffee, setOpenCoffee, setOrders, orders}){
     function close() {
         setOpenCoffee();
     }
+    if (!openCoffee) return null;
+
+    const order = {
+        name: openCoffee.name
+    }
+
+    function addToOrder(){
+        setOrders([...orders, order]);
+        close();
+    }
+
     return (
-        openCoffee ? (
      <>
         <DialogShadow onClick={close} />
         <Dialog>
@@ -80,7 +90,7 @@ export function CoffeeDialog({openCoffee, setOpenCoffee}){
 
             </DialogContent>
             <DialogFooter>
-                <ConfirmButton>
+                <ConfirmButton onClick={addToOrder}>
                     add to order
                 </ConfirmButton>
             </DialogFooter>
@@ -88,6 +98,6 @@ export function CoffeeDialog({openCoffee, setOpenCoffee}){
         </Dialog>
 
      </>
-        ) : null
+
     );
 }

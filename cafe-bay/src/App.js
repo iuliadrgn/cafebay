@@ -7,23 +7,22 @@ import {Menu} from "./Menu/Menu";
 import{GlobalStyle} from "./styles/GlobalStyle";
 import {CoffeeDialog} from "./CoffeeDialog/CoffeeDialog";
 import {Order} from "./Order/Order";
+import {useOpenCoffee} from "./Hooks/useOpenCoffee";
+import {useOrders} from "./Hooks/useOrders";
 
 function App() {
-    const[openCoffee, setOpenCoffee] = useState();
+    const openCoffee = useOpenCoffee();
+    const orders = useOrders();
 
   return (
       <>
         <GlobalStyle/>
-          <CoffeeDialog openCoffee={openCoffee} setOpenCoffee={setOpenCoffee}></CoffeeDialog>
+          <CoffeeDialog {...openCoffee} {...orders}/>
           <Navbar/>
-          <Order/>
+          <Order {...orders} />
           <Banner/>
-
-          <Menu setOpenCoffee={setOpenCoffee}/>
-
+          <Menu {...openCoffee}/>
         </>
-
   );
 }
-
 export default App;

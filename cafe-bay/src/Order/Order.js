@@ -20,12 +20,12 @@ padding: 20px;
 height: 77%;
 `;
 
-export function Order(){
+export function Order({orders}){
     return <OrderStyled>
-
+        {orders.length === 0 ?
             <OrderContent>
                 ye kam goala komanda
-            </OrderContent>
+            </OrderContent> : <OrderContent> Found {orders.length} orders </OrderContent> }
             <DialogFooter>
                 <ConfirmButton>
                     checkout
