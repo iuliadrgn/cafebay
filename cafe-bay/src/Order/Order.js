@@ -34,24 +34,38 @@ grid-template-column: 60px 100px 10px 30px;
 justify-content: space-between;
 `;
 
-export function Order({orders}){
+export function Order({orders, setOrders, setOpenCoffee}){
     const subtotal = orders.reduce((total, order) =>{
         return total + getPrice(order);
     }, 0);
+
+    const deleteItem = index => {
+        const newOrders = [orders];
+        newOrders.splice(index, 1);
+        setOrders(newOrders);
+    }
+
     return (
         <OrderStyled>
         {orders.length === 0 ?
             ( <OrderContent>
-                ye kam goala komanda
+                your order is empty
             </OrderContent>
             ) : (
                 <OrderContent> <OrderContainer> Your order: </OrderContainer>{""}
-                    {orders.map(order => (
+                    {orders.map((order, index) => (
                       <OrderContainer>
-                        <OrderItem>
+                        <OrderItem
+                        onClick={() => {
+                            setOpenCoffee({...order, index})
+                        }}
+                        >
                             <div>{order.quantity}</div>
                             <div>{order.name}</div>
-                            <div/>
+                            <div style={{cursor: 'pointer'}}
+                                 onClick={e => {
+                                     e.stopPropagation();
+                                     deleteItem(index)}}>❌</div>
                             <div>{formatPrice(getPrice(order))}</div>
                         </OrderItem>
                       </OrderContainer>

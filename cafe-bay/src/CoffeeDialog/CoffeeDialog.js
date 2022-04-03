@@ -5,6 +5,8 @@ import {caramel} from "../styles/colors";
 import {formatPrice} from "../Data/CoffeeData";
 import {QuantityInput} from "./QuantityInput";
 import {useQuantity} from "../Hooks/useQuantity";
+import {Extras} from "./Extras";
+import {useExtras} from "../Hooks/useExtras";
 
 const Dialog = styled.div`
 width: 500px;
@@ -72,8 +74,15 @@ export function getPrice(order){
 return order.quantity * order.price;
 }
 
+function hasExtras(coffee){
+    return coffee.section === 'Hot Beverage';
+}
+
 function CoffeeDialogContainer({openCoffee, setOpenCoffee, setOrders, orders}){
     const quantity = useQuantity(openCoffee && openCoffee.quantity);
+    const extras = useExtras(openCoffee.extras);
+    const isEditing = openCoffee.index > -1;
+
     function close() {
         setOpenCoffee();
     }
@@ -81,7 +90,15 @@ function CoffeeDialogContainer({openCoffee, setOpenCoffee, setOrders, orders}){
 
     const order = {
         ...openCoffee,
-        quantity: quantity.value
+        quantity: quantity.value,
+        extras: extras.extras
+    };
+
+    function editOrder(){
+        const newOrders = [...orders];
+        newOrders[openCoffee.index] = order;
+        setOrders(newOrders);
+        close();
     }
 
     function addToOrder(){
@@ -98,10 +115,17 @@ function CoffeeDialogContainer({openCoffee, setOpenCoffee, setOrders, orders}){
             </DialogBanner>
             <DialogContent>
                 <QuantityInput quantity={quantity}/>
+                {hasExtras(openCoffee) && (
+                <>
+                    <h3>Would you like something extra?</h3>
+                   <Extras {...extras} />
+                </>
+                )}
             </DialogContent>
             <DialogFooter>
-                <ConfirmButton onClick={addToOrder}>
-                    add to order: {formatPrice(getPrice(order))}
+                <ConfirmButton onClick={isEditing ? editOrder : addToOrder}>
+                    {isEditing ? `update order: ` : `add to order:`}
+                    {formatPrice(getPrice(order))}
                 </ConfirmButton>
             </DialogFooter>
 

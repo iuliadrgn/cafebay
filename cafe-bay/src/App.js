@@ -21,7 +21,7 @@ function App() {
         <GlobalStyle/>
           <CoffeeDialog {...openCoffee} {...orders}/>
           <Navbar/>
-          <Order {...orders} />
+          <Order {...orders} {...openCoffee} />
           <Banner/>
           <Menu {...openCoffee}/>
         </>
