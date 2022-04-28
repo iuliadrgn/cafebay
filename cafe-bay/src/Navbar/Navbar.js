@@ -14,11 +14,29 @@ const Logo = styled(Title)`
 font-size: 30px;
 color: white;
 text-shadow: 1px 2px black;
-`
+`;
+const Login = styled(Title)`
+font-size: 25px;
+color: white;
+position: absolute;
+right: 60px;
+top: 8px;
+`;
+
+const Cart = styled(Title)`
+font-size: 25px;
+color: white;
+position: absolute;
+right: 20px;
+top: 8px;
+`;
+
 export function Navbar(){
     return <NavbarStyled>
      <Logo>
          Cafe Bay<span role="img" aria-label="coffee">☕</span>
      </Logo>
+        <Login>login</Login>
+        <Cart>🛒</Cart>
     </NavbarStyled>
 }

@@ -11,6 +11,10 @@ import {useOpenCoffee} from "./Hooks/useOpenCoffee";
 import {useOrders} from "./Hooks/useOrders";
 import {useTitle} from "./Hooks/useTitle";
 
+//const auth = window.firebase.auth();
+//const provider = new window.firebase.auth.GoogleAuthProvider();
+//auth.signInWithPopup(provider);
+
 function App() {
     const openCoffee = useOpenCoffee();
     const orders = useOrders();

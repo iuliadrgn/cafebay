@@ -78,6 +78,36 @@ export const coffeeItems = [
         img: 'images/decaf.jpg',
         section: "Hot Beverage",
         price: 7
+    },
+    {
+        name: 'Croissant',
+        img: 'images/croissant.jpg',
+        section: "Snacks",
+        price: 7
+    },
+    {
+        name: 'Donut',
+        img: 'images/donut.jpg',
+        section: "Snacks",
+        price: 9
+    },
+    {
+        name: 'Cherry Pie',
+        img: 'images/cherrypie.jpg',
+        section: "Snacks",
+        price: 12
+    },
+    {
+        name: 'Milkshake',
+        img: 'images/milkshake.jpg',
+        section: "Cold Beverage",
+        price: 13
+    },
+    {
+        name: 'Chocolate Tart',
+        img: 'images/chocolate.jpg',
+        section: "Snacks",
+        price: 12
     }
 ];
 
