@@ -19,7 +19,7 @@ import Login from "./Login";
 import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import PrivateRoute from "./PrivateRoute";
-
+import ForgotPassword from "./ForgotPassword";
 
 function App() {
     const openCoffee = useOpenCoffee();
@@ -53,6 +53,8 @@ function App() {
                           <Route path="/login" element={<Login />} />
                           <Route path="/profile" element={<Profile />} />
                           <Route path="/order" element={<Order {...orders} {...openCoffee} />} />
+                          <Route path="/forgot-password" element={<ForgotPassword />} />
+
                           <Route
                               path="*"
                               element={<Navigate to="/" replace />}
