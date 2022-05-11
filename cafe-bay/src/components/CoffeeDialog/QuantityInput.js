@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {caramel} from "../styles/colors";
-import {warm_white} from "../styles/colors";
+import {caramel} from "../../styles/colors";
+import {warm_white} from "../../styles/colors";
 
 const QuantityInputStyled = styled.input`
 font-size: 18px;

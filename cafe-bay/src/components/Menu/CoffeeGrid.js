@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 export const CoffeeGrid = styled.div`
 display: grid;
-grid-template-columns: 1fr 1fr 1fr 1fr;
+margin-left: 5px;
+grid-align: center;
+grid-template-columns: repeat(5, 1fr);
 gap: 15px;
 `
 export const CoffeeLabel = styled.div`

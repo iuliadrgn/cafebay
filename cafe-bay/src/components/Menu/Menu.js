@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import {coffees} from "../Data/CoffeeData";
+import {coffees} from "../../Data/CoffeeData";
 import {Coffee, CoffeeGrid, CoffeeLabel} from "./CoffeeGrid";
-import {formatPrice} from "../Data/CoffeeData";
+import {formatPrice} from "../../Data/CoffeeData";
 
 const MenuStyled = styled.div`
 border: 2px black;
 height: 1000px;
-margin: 15px 1000px 15px 20px;
+margin: 30px 100px 100px 100px;
 `;
 
 export function Menu({setOpenCoffee}){

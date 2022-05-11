@@ -1,34 +1,31 @@
 import React, {useState} from 'react';
 import { createGlobalStyle } from "styled-components";
 import {Navbar} from "./Navbar/Navbar";
-import {warm_white} from "./styles/colors";
 import {Banner} from "./Banner/Banner";
 import {Menu} from "./Menu/Menu";
-import{GlobalStyle} from "./styles/GlobalStyle";
+import{GlobalStyle} from "../styles/GlobalStyle";
 import {CoffeeDialog} from "./CoffeeDialog/CoffeeDialog";
 import {Order} from "./Order/Order";
 import {useOpenCoffee} from "./Hooks/useOpenCoffee";
 import {useOrders} from "./Hooks/useOrders";
 import {useTitle} from "./Hooks/useTitle";
+import firebase from 'firebase/compat/app';
+import "firebase/compat/auth";
 
-//const auth = window.firebase.auth();
-//const provider = new window.firebase.auth.GoogleAuthProvider();
-//auth.signInWithPopup(provider);
 
 function App() {
     const openCoffee = useOpenCoffee();
     const orders = useOrders();
     useTitle({...openCoffee, ...orders});
 
-  return (
-      <>
-        <GlobalStyle/>
-          <CoffeeDialog {...openCoffee} {...orders}/>
-          <Navbar/>
-          <Order {...orders} {...openCoffee} />
-          <Banner/>
-          <Menu {...openCoffee}/>
+    return (
+        <>
+            <GlobalStyle/>
+            <CoffeeDialog {...openCoffee} {...orders}/>
+
+            <Banner/>
+            <Menu {...openCoffee}/>
         </>
-  );
+    );
 }
 export default App;

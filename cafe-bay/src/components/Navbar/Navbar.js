@@ -1,7 +1,9 @@
 import React from "react";
 import styled from 'styled-components';
-import {caramel} from "../styles/colors";
-import {Title} from "../styles/titles";
+import {caramel} from "../../styles/colors";
+import {Title} from "../../styles/titles";
+import {Button} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 const NavbarStyled = styled.div`
 background-color: ${caramel};
@@ -32,6 +34,7 @@ top: 8px;
 `;
 
 export function Navbar(){
+
     return <NavbarStyled>
      <Logo>
          Cafe Bay<span role="img" aria-label="coffee">☕</span>

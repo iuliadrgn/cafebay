@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {DialogContent, DialogFooter, ConfirmButton} from "../CoffeeDialog/CoffeeDialog"
-import {formatPrice} from "../Data/CoffeeData";
+import {formatPrice} from "../../Data/CoffeeData";
 import {getPrice} from "../CoffeeDialog/CoffeeDialog";
 
 const OrderStyled = styled.div`
