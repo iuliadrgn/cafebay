@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { createGlobalStyle } from "styled-components";
-import {Navbar} from "./Navbar/Navbar";
+import {Navbar} from "./Navbar";
 import {Banner} from "./Banner/Banner";
 import {Menu} from "./Menu/Menu";
 import{GlobalStyle} from "../styles/GlobalStyle";
@@ -20,7 +20,7 @@ function App() {
 
     return (
         <>
-            <GlobalStyle/>
+
             <CoffeeDialog {...openCoffee} {...orders}/>
 
             <Banner/>

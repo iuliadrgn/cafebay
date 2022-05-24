@@ -5,7 +5,7 @@ export const CoffeeGrid = styled.div`
 display: grid;
 margin-left: 5px;
 grid-align: center;
-grid-template-columns: repeat(5, 1fr);
+grid-template-columns: repeat(5, 250px);
 gap: 15px;
 `
 export const CoffeeLabel = styled.div`
@@ -19,7 +19,7 @@ height: 250px;
 width: 250px;
 padding: 10px;
 font-size: 20px;
-background-image: ${({image}) => `url(${image});`}
+
 background-size: cover;
 background-position: center;
 border-radius : 7px;

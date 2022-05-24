@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { createGlobalStyle } from "styled-components";
-import {Navbar} from "./Navbar/Navbar";
+import NavbarComp, {Navbar} from "./Navbar";
 import {Banner} from "./Banner/Banner";
 import {Menu} from "./Menu/Menu";
 import{GlobalStyle} from "../styles/GlobalStyle";
@@ -20,6 +20,10 @@ import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";
+import UpdateProfile from "./UpdateProfile";
+import AddProducts from "./AddProducts";
+import {Products} from "./Products";
+import Home from "./Home";
 
 function App() {
     const openCoffee = useOpenCoffee();
@@ -30,7 +34,7 @@ function App() {
       <>
         <GlobalStyle/>
 
-          <Navbar/>
+          <NavbarComp/>
 
           <Container
               className = "d-flex align-items-center justify-content-center"
@@ -43,9 +47,9 @@ function App() {
                           <Route path="/"
 
                                  element={
-                                     <PrivateRoute>
+
                                          <Navigate to={"/dashboard"}/>
-                                     </PrivateRoute>
+
                                  }
 
                           ></Route>
@@ -54,6 +58,9 @@ function App() {
                           <Route path="/profile" element={<Profile />} />
                           <Route path="/order" element={<Order {...orders} {...openCoffee} />} />
                           <Route path="/forgot-password" element={<ForgotPassword />} />
+                          <Route path="/update-profile" element={<UpdateProfile />} />
+                          <Route path="/add-products" element={<AddProducts />} />
+                          <Route path="/products" element={<Products />} />
 
                           <Route
                               path="*"
