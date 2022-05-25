@@ -6,7 +6,8 @@ display: grid;
 margin-left: 5px;
 grid-align: center;
 grid-template-columns: repeat(5, 250px);
-gap: 15px;
+grid-row-gap: 150px;
+grid-column-gap: 15px;
 `
 export const CoffeeLabel = styled.div`
 position: absolute;

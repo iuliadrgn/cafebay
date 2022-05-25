@@ -13,7 +13,7 @@ export default function Profile() {
 
         try {
             await logout()
-            navigate("/")
+            navigate("/home")
         } catch {
             setError('failed to log out')
         }

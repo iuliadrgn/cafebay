@@ -10,4 +10,8 @@ export const GlobalStyle = createGlobalStyle`
     h1, h2, h3 {
      font-family: 'Lobster Two', cursive;
   }
+  
+  h4, h5, h6 {
+     font-family: 'Comfortaa', cursive;
+  }
 `

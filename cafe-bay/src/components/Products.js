@@ -10,7 +10,7 @@ height: 1000px;
 margin: 30px 100px 100px 100px;
 `;
 
-export const Products = ({product}) => {
+export const Products = ({product, addToCart}) => {
 
      // console.log(product);
      // return(
@@ -22,7 +22,9 @@ export const Products = ({product}) => {
 
     return product?.map((individualProduct)=>(
 
-        <IndividualProduct key = {individualProduct.ID} individualProduct={individualProduct}/>
+        <IndividualProduct key = {individualProduct.ID} individualProduct={individualProduct}
+        addToCart={addToCart}
+        />
 
     )
 

@@ -1,27 +1,30 @@
 import React, {Component} from "react";
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import {Container} from "react-bootstrap";
-import {BrowserRouter as Router, Navigate, Route, Routes, Link} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Route, Routes, Link, useNavigate} from "react-router-dom";
 import Login from "./Login";
-import Dashboard from "./Dashboard";
 import Profile from "./Profile";
 import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Signup from "./Signup";
 import AddProducts from "./AddProducts";
-import {Order} from "./Order/Order";
 import {Banner} from "./Banner/Banner";
 import Home from "./Home";
+import {auth} from "../contexts/firebase";
+import {Icon} from 'react-icons-kit'
+import {shoppingCart} from 'react-icons-kit/feather/shoppingCart'
+import AuthProvider from "../contexts/AuthContext";
+import {Products} from "./Products";
+import Cart from "./Cart";
 
+export default function NavbarComp({totalProducts}){
 
-export default class NavbarComp extends Component {
-    render() {
         return(
             <Router>
 
             <div>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" totalProducts={totalProducts}>
                     <Container>
                         <Navbar.Brand href="#home">Cafe Bay<span role="img" aria-label="coffee">☕</span></Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -40,7 +43,12 @@ export default class NavbarComp extends Component {
                                 </NavDropdown>
                             </Nav>
                             <Nav>
-                                <Nav.Link href="#deets">More deets</Nav.Link>
+                                <div className='cart-menu-btn'>
+                                    <Link className='navlink' to="/cart">
+                                        <Icon icon={shoppingCart} size={20}/>
+                                    </Link>
+                                    <span className='cart-indicator'>{totalProducts}</span>
+                                </div>
                                 <Nav.Link eventKey={2} href="#memes">
                                     Dank memes
                                 </Nav.Link>
@@ -51,24 +59,28 @@ export default class NavbarComp extends Component {
             </div>
 
                 <div>
-                    <Routes>
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/" element={<Dashboard/>}/>
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/forgot-password" element={<ForgotPassword />} />
-                        <Route path="/update-profile" element={<UpdateProfile />} />
-                        <Route path="/add-products" element={<AddProducts />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route
-                            path="*"
-                            element={<Navigate to="/" replace />}
-                        />
-                    </Routes>
+                    <AuthProvider>
+                        <Routes>
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/" element={<Navigate to={"/home"}/>}></Route>
+                            <Route path="/signup" element={<Signup />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/forgot-password" element={<ForgotPassword />} />
+                            <Route path="/update-profile" element={<UpdateProfile />} />
+                            <Route path="/add-products" element={<AddProducts />} />
+                            <Route path="/products" element={<Products />} />
+                            <Route path="/cart" element={<Cart />} />
+
+                            <Route
+                                path="*"
+                                element={<Navigate to="/" replace />}
+                            />
+                        </Routes>
+                    </AuthProvider>
                 </div>
             </Router>
         )
-    }
+
 }
 
