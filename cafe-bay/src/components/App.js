@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { createGlobalStyle } from "styled-components";
 import {Banner} from "./Banner/Banner";
 import {Menu} from "./Menu/Menu";
@@ -22,17 +22,62 @@ import AddProducts from "./AddProducts";
 import {Products} from "./Products";
 import Home from "./Home";
 import NavbarComp, {Navbar} from "./Navbar";
+import {auth, fs} from "../contexts/firebase";
 
 function App() {
-    const openCoffee = useOpenCoffee();
-    const orders = useOrders();
-    useTitle({...openCoffee, ...orders});
+
+    function GetUserUid(){
+        const [uid, setUid]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    setUid(user.uid);
+                }
+            })
+        },[])
+        return uid;
+    }
+
+    const uid = GetUserUid();
+    console.log(uid);
+
+    function GetCurrentUser(){
+        const [user, setUser]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setUser(snapshot.data().FullName);
+                    })
+                }
+                else{
+                    setUser(null);
+                }
+            })
+        },[])
+        return user;
+    }
+
+    const user = GetCurrentUser();
+
+    const [totalProducts, setTotalProducts]=useState(0);
+    // getting cart products
+    useEffect(()=>{
+        auth.onAuthStateChanged(user=>{
+            if(user){
+                fs.collection('Cart ' + user.uid).onSnapshot(snapshot=>{
+                    const qty = snapshot.docs.length;
+                    setTotalProducts(qty);
+                })
+            }
+        })
+    },[])
 
   return (
       <>
         <GlobalStyle/>
 
-          <NavbarComp/>
+          <NavbarComp totalProducts={totalProducts}/>
 
           <Container
               className = "d-flex align-items-center justify-content-center"

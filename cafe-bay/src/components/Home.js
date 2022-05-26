@@ -70,18 +70,7 @@ export default function Home(props){
 
     useEffect(()=>{ getProducts()},[])
 
-    const [totalProducts, setTotalProducts]=useState(0);
 
-    useEffect(()=>{
-        auth.onAuthStateChanged(user=>{
-            if(user){
-                fs.collection('Cart ' + user.uid).onSnapshot(snapshot=>{
-                    const qty = snapshot.docs.length;
-                    setTotalProducts(qty);
-                })
-            }
-        })
-    },[])
 
     const navigate = useNavigate()
     let Product;

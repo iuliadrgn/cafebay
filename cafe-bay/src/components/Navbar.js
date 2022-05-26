@@ -45,7 +45,7 @@ export default function NavbarComp({totalProducts}){
                             <Nav>
                                 <div className='cart-menu-btn'>
                                     <Link className='navlink' to="/cart">
-                                        <Icon icon={shoppingCart} size={20}/>
+                                        <Icon icon={shoppingCart} size={25}/>
                                     </Link>
                                     <span className='cart-indicator'>{totalProducts}</span>
                                 </div>

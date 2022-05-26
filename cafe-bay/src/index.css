@@ -1,14 +1,15 @@
 .cart-menu-btn .cart-indicator{
-    width: 18px;
-    background-color: #753314;
-    padding: 3px;
-    border-radius: 3px;
+    width: 13px;
+    height: 13px;
+    background-color: antiquewhite;
+    padding: 2px;
+    border-radius: 2px;
     margin-color: white;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     position: absolute;
-    top: -17px;
-    right: -15px;
+    top: -3px;
+    right: -7px;
     display: flex;
     justify-content: center;
     align-items: center;
