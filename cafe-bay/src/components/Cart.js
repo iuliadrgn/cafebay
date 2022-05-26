@@ -2,8 +2,15 @@ import React, {useState, useEffect} from "react";
 import {auth,fs} from "../contexts/firebase";
 import OrderItems from "./OrderItems";
 import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
 
 export default function Cart(){
+
 
     function GetCurrentUser(){
         const [user, setUser]=useState(null);
@@ -100,6 +107,38 @@ export default function Cart(){
         }
     }
 
+    //credit card payment
+    const navigate = useNavigate();
+    const handleToken = async(token) => {
+      //  console.log(token)
+        const cart = {name: 'All Products', totalPrice}
+        const response = await axios.post('http://localhost:8080/checkout', {
+            token,
+            cart
+        })
+        console.log(response);
+        let {status}=response.data;
+        if(status==='success'){
+            navigate('/');
+            toast.success('Your order has been placed successfully', {
+                position: 'top-right',
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+            });
+            const uid = auth.currentUser.uid;
+            const carts = await fs.collection('Cart ' + uid).get();
+            for(let snap of carts.docs){
+                await fs.collection('Cart ' + uid).doc(snap.id).delete();
+            }
+        }else{
+            alert('something went wrong in checkout')
+        }
+    }
+
 
     return(
         <>
@@ -124,7 +163,12 @@ export default function Cart(){
                         </div>
                         <br></br>
                         <StripeCheckout
-
+                        stripeKey='pk_test_51L3e1PBJ6d9Rh1UOyowfB4XJSuwvHZU2YiEGXGkCCH1CKtTCBsp2jiBm22wNAbfAbTXCaKK2i89TjJZIb4JDugvG00TcG4l0HP'
+                        token={handleToken}
+                        billingAddress
+                        shippingAddress
+                        name='All Products'
+                        amount={totalPrice * 100}
                         ></StripeCheckout>
                     </div>
                 </div>
