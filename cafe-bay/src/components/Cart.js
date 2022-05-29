@@ -6,11 +6,21 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from "./Modal";
 
 toast.configure();
 
 export default function Cart(){
 
+    const [showModal, setShowModal]=useState(false);
+
+    const triggerModal=()=>{
+        setShowModal(true);
+    }
+
+    const hideModal=()=>{
+        setShowModal(false);
+    }
 
     function GetCurrentUser(){
         const [user, setUser]=useState(null);
@@ -170,12 +180,22 @@ export default function Cart(){
                         name='All Products'
                         amount={totalPrice * 100}
                         ></StripeCheckout>
+                        <h6 className='text-center'
+                            style={{marginTop: 7+'px'}}>OR</h6>
+                        <button className='btn btn-secondary btn-md'
+                                onClick={()=>triggerModal()}>pay cash on delivery</button>
                     </div>
                 </div>
             )}
             {cartProducts.length < 1 && (
                 <div className='container-fluid'>No products to show</div>
             ) }
+
+            {showModal===true&&(
+                <Modal TotalPrice={totalPrice} totalQty={totalQty}
+                       hideModal={hideModal}
+                />
+            )}
         </>
     )
 }
