@@ -8,7 +8,13 @@ import {useNavigate} from "react-router-dom";
 import IndividualFilteredProduct from "./IndividualFilteredProduct";
 
 
-export default function Home(props){
+const MenuStyled = styled.div`
+border: 2px black;
+height: 1000px;
+margin: 30px 100px 100px 100px;
+`;
+
+export default function TucanoDashboard(props){
 
     function GetUserUid(){
         const [uid, setUid]=useState(null);
@@ -51,9 +57,11 @@ export default function Home(props){
 
         const product = await fs.collection('Products').get()
         const productsArray = []
+
         for (let snap of product.docs){
             let data = snap.data();
             data.ID = snap.id;
+
             productsArray.push({
                 ...data
             })
@@ -71,7 +79,7 @@ export default function Home(props){
     const searchCoffee=(e)=>{
         e.preventDefault();
         setCoffees(coffees.filter((coffee)=>
-        coffees.title.toLowerCase().includes(search.toLowerCase())
+            coffees.title.toLowerCase().includes(search.toLowerCase())
         ));
 
     };
@@ -82,7 +90,7 @@ export default function Home(props){
 
     const addToCart = (product)=>{
         if(uid!==null){
-             console.log(product);
+            console.log(product);
             Product=product;
             Product['qty']=1;
             Product['TotalProductPrice']=Product.qty*Product.price;
@@ -92,36 +100,24 @@ export default function Home(props){
 
         }
         else{
-         navigate('/login')
+            navigate('/login')
 
         }
 
     }
 
-    const [spans]=useState([
-        {id: 'Hot Coffee Drinks', text: 'Hot Coffee Drinks'},
-        {id: 'Cold Coffee Drinks', text: 'Cold Coffee Drinks'},
-        {id: 'Alcoholic Drinks', text: 'Alcoholic Drinks'},
-        {id: 'Water', text: 'Water'},
-        {id: 'Soda', text: 'Soda'},
-        {id: 'Natural Fruit Juices', text: 'Natural Fruit Juices'},
-        {id: 'Dessert', text: 'Dessert'},
-        {id: 'Snacks', text: 'Snacks'},
-    ])
-
     const [active, setActive]=useState('');
-
-    const [category, setCategory]=useState('');
+    const [store, setStore]=useState('');
 
     const handleChange=(individualSpan)=>{
         setActive(individualSpan.id);
-        setCategory(individualSpan.text);
+        setStore(individualSpan.text);
         filterFunction(individualSpan.text);
     }
 
-    const filterFunction = (text)=>{
+    const filterFunction = ()=>{
         if(product.length>1){
-            const filter=product.filter((product)=>product.category===text);
+            const filter=product.filter((product)=> product.store==="Tucano");
             setFilteredProducts(filter);
         }
         else{
@@ -132,10 +128,9 @@ export default function Home(props){
     const [filteredProducts, setFilteredProducts]=useState([]);
 
 
-
     const returntoAllProducts=()=>{
         setActive('');
-        setCategory('');
+        setStore('');
         setFilteredProducts([]);
 
     }
@@ -146,50 +141,47 @@ export default function Home(props){
 
         <>
             <div>
+                <form onSubmit={(e)=> {searchCoffee(e)}}>
+                    <input onChange={(e)=>{setSearch(e.target.value)}}/>
+                    <button type = "submit">Search</button>
 
 
-            <div className='container-fluid filter-products-main-box'>
+                    <div className='container-fluid filter-products-main-box'>
 
-                <div className='filter-box'>
-                    <h6>Filter by category</h6>
-                    {spans.map((individualSpan,index)=>(
-                        <span key={index} id={individualSpan.id}
-                              onClick={()=>handleChange(individualSpan)}
-                              className={individualSpan.id===active ? active:'deactive'}>{individualSpan.text}</span>
-                    ))}
-                </div>
-                {filteredProducts.length > 0&&(
-                    <div className='my-products'>
-                        <h1 className='text-center'>{category}</h1>
-                        <a href="javascript:void(0)" onClick={returntoAllProducts}>Return to All Products</a>
-                        <div className='products-box'>
-                            {filteredProducts.map(individualFilteredProduct=>(
-                                <IndividualFilteredProduct key={individualFilteredProduct.ID}
-                                                           individualFilteredProduct={individualFilteredProduct}
-                                                           addToCart={addToCart}/>
-                            ))}
-                        </div>
-                    </div>
-                )}
-                {filteredProducts.length < 1&&(
-                    <>
-                        {product.length > 0&&(
+                        {filteredProducts.length > 0 && product.store==="Tucano"&&(
                             <div className='my-products'>
-                                <h1 className='text-center'>All Products</h1>
+                                <h1 className='text-center'>{store}</h1>
+                                <a href="javascript:void(0)" onClick={returntoAllProducts}>Return to All Products</a>
                                 <div className='products-box'>
-                                    <Products product={product} addToCart={addToCart}/>
-
+                                    {filteredProducts.map(individualFilteredProduct=>(
+                                        <IndividualFilteredProduct key={individualFilteredProduct.ID}
+                                                                   individualFilteredProduct={individualFilteredProduct}
+                                                                   addToCart={addToCart}/>
+                                    ))}
                                 </div>
                             </div>
                         )}
-                        {product.length < 1&&(
-                            <div className='my-products please-wait'>Please wait...</div>
+                        {filteredProducts.length < 1 &&(
+                            <>
+                                {product.length > 0 && (
+                                    <div className='my-products'>
+                                        <h1 className='text-center'>All Products</h1>
+                                        <div className='products-box'>
+
+                                            <Products product={product} addToCart={addToCart}/>
+
+
+                                        </div>
+                                    </div>
+                                )}
+                                {product.length < 1&&(
+                                    <div className='my-products please-wait'>Please wait...</div>
+                                )}
+                            </>
                         )}
-                    </>
-                )}
 
-            </div>
-
+                    </div>
+                </form>
             </div>
         </>
 

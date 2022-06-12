@@ -33,6 +33,14 @@
 
 }
 
+.btn{
+    background-color: #753314;
+    font-size: 13px;
+    color:white;
+
+
+}
+
 .products-box{
     width: 100%;
     display: flex;
@@ -213,7 +221,7 @@
     cursor: pointer;
 }
 
-/* modal css */
+
 .shade-area{
     width: 100vw;
     height: 100vh;
@@ -233,4 +241,149 @@
     background-color: #fff;
     position: relative;
 }
+
+.filter-products-main-box{
+    width: 100%;
+    display: flex;
+}
+
+@media(max-width: 540px){
+    .filter-products-main-box{
+        flex-direction: column;
+    }
+}
+
+.filter-products-main-box .my-products{
+    flex: 3.3;
+    /* border: 1px solid green; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media(max-width: 540px){
+    .filter-products-main-box .my-products{
+        width: 100%;
+        margin-top: 30px;
+    }
+}
+
+.filter-box{
+    display: flex;
+    flex-direction: column;
+
+    flex: 0.7;
+    padding-left: 15px;
+    padding-top: 10px;
+}
+
+@media(max-width: 540px){
+    .filter-box{
+        width: 100%;
+        padding-left: 10px;
+        padding-top: 5px;
+    }
+}
+
+.filter-box h6{
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.filter-box span{
+    cursor: pointer;
+    margin: 15px 0px;
+    font-size: 14px;
+}
+
+.filter-box span.HotCoffeeDrinks{
+    color: #753314;
+}
+
+.filter-box span.ColdCoffeeDrinks{
+    color: #753314;
+}
+
+.filter-box span.AlcoholicDrinks{
+    color: #753314;
+}
+
+.filter-box span.Water{
+    color: #753314;
+}
+
+.Soda,.NaturalFruitJuices,.Dessert,.Snacks{
+    color: #753314;
+}
+
+.products-box{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.products-box.cart{
+    height: auto;
+    overflow-y: auto;
+}
+
+@media(max-width: 540px){
+    .products-box{
+        height: auto;
+    }
+}
+
+.product:hover {
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1);
+}
+
+@media(min-width: 768px){
+    .product{
+        width: 300px;
+    }
+}
+
+.product .product-img{
+    width: 150px;
+    height: 150px;
+}
+
+.product .product-img img{
+    width: 100%;
+    height: 100%;
+}
+
+.product .product-text{
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.product .product-text.title{
+    color: #753314;
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.product .product-text.description{
+    height: 50px;
+    overflow: hidden;
+}
+
+.product .product-text.price{
+    font-weight: 600;
+}
+
+.product .product-text.cart-price{
+    font-weight: 600;
+    color: #753314;
+}
+
+
 

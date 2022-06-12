@@ -8,6 +8,8 @@ export default function AddProducts() {
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [category, setCategory]=useState('');
+    const [store, setStore]=useState('');
     const [image, setImage] = useState(null);
 
     const [imageError, setImageError] = useState('');
@@ -44,19 +46,23 @@ export default function AddProducts() {
                 fs.collection('Products').add({
                     productName,
                     description,
+                    category,
+                    store,
                     price: Number(price),
                     url
                 }).then(() => {
                     setSuccessMsg('Product added successfully');
                     setProductName('');
                     setDescription('');
+                    setCategory('');
+                    setStore('');
                     setPrice('');
                     document.getElementById('file').value = '';
                     setImageError('');
                     setUploadError('');
                     setTimeout(() => {
                         setSuccessMsg('');
-                    }, 3000)
+                    }, 1000)
                 }).catch(error => setUploadError(error.message));
             })
         })
@@ -85,6 +91,34 @@ export default function AddProducts() {
                 <input type="number" className='form-control' required
                        onChange={(e) => setPrice(e.target.value)} value={price}></input>
                 <br></br>
+
+                <label>Product Category</label>
+                <select className='form-control' required
+                        value={category} onChange={(e)=>setCategory(e.target.value)}>
+                    <option value="">Select Product Category</option>
+                    <option>Hot Coffee Drinks</option>
+                    <option>Cold Coffee Drinks</option>
+                    <option>Alcoholic Drinks</option>
+                    <option>Water</option>
+                    <option>Soda</option>
+                    <option>Natural Fruit Juices</option>
+                    <option>Dessert</option>
+                    <option>Snacks</option>
+
+                </select>
+                <br></br>
+
+                <label>Store</label>
+                <select className='form-control' required
+                        value={store} onChange={(e)=>setStore(e.target.value)}>
+                    <option value="">Select Store</option>
+                    <option>Starbucks</option>
+                    <option>Tucano</option>
+                    <option>5 to go</option>
+
+                </select>
+                <br></br>
+
                 <label>Upload Product Image</label>
                 <input type="file" id="file" className='form-control' required
                        onChange={handleProductImg}></input>
@@ -96,9 +130,7 @@ export default function AddProducts() {
                 </>}
                 <br></br>
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-                    <button type="submit" className='btn btn-success btn-md'>
-                        SUBMIT
-                    </button>
+                    <button type="submit" className='btn btn-dark btn-md'>submit</button>
                 </div>
             </form>
             {uploadError && <>

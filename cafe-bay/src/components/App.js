@@ -1,12 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import { createGlobalStyle } from "styled-components";
 import {Banner} from "./Banner/Banner";
-import {Menu} from "./Menu/Menu";
+
 import{GlobalStyle} from "../styles/GlobalStyle";
-import {CoffeeDialog} from "./CoffeeDialog/CoffeeDialog";
-import {useOpenCoffee} from "./Hooks/useOpenCoffee";
-import {useOrders} from "./Hooks/useOrders";
-import {useTitle} from "./Hooks/useTitle";
+
 import firebase from 'firebase/compat/app';
 import "firebase/compat/auth";
 import Signup from "./Signup";
@@ -77,7 +73,11 @@ function App() {
       <>
         <GlobalStyle/>
 
+
+
           <NavbarComp totalProducts={totalProducts}/>
+
+
 
           <Container
               className = "d-flex align-items-center justify-content-center"

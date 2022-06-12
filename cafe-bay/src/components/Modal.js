@@ -75,7 +75,7 @@ export default function Modal({TotalPrice, totalQty, hideModal}){
                            required value={cartPrice}
                     />
                     <br></br>
-                    <button type='submit' className='btn btn-success btn-md'>Submit</button>
+                    <button type='submit' className='btn btn-dark btn-md'>submit</button>
                 </form>
                 <div className='delete-icon' onClick={handleCloseModal}>x</div>
             </div>

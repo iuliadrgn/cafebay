@@ -1,7 +1,10 @@
+
+
 const express = require('express');
 const cors = require('cors');
 const { v4: uuidv4 }=require('uuid');
 const stripe = require('stripe')('sk_test_51L3e1PBJ6d9Rh1UO6ggGdRuQyBZp3ZuPOfiGCVMzSFSmhe0c1lLdLtd0lNIGezamvyDJ6Jzz5Ee08XJNIwzt7knu00qgepQkAW');
+
 
 const app = express();
 app.use(cors());
@@ -10,6 +13,7 @@ app.use(express.json());
 
 app.get('/',(req,res)=>{
     res.send('Welcome to Cafe Bay');
+
 })
 
 app.post('/checkout', async(req, res)=>{
@@ -48,5 +52,5 @@ app.post('/checkout', async(req, res)=>{
 )
 
 app.listen(8080,()=>{
-    console.log('your app is running on port no 8080');
+    console.log('Cafe Bay app is running on port no 8080');
 })

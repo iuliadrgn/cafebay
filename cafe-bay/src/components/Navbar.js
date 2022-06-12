@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import {Container} from "react-bootstrap";
 import {BrowserRouter as Router, Navigate, Route, Routes, Link, useNavigate} from "react-router-dom";
@@ -17,6 +17,8 @@ import {shoppingCart} from 'react-icons-kit/feather/shoppingCart'
 import AuthProvider from "../contexts/AuthContext";
 import {Products} from "./Products";
 import Cart from "./Cart";
+import TucanoDashboard from "./TucanoDashboard";
+import {warm_white} from "../styles/colors";
 
 export default function NavbarComp({totalProducts}){
 
@@ -34,30 +36,29 @@ export default function NavbarComp({totalProducts}){
                                 <Nav.Link as={Link} to={"/login"}>Login</Nav.Link>
                                 <Nav.Link as={Link} to={"/profile"}>Profile</Nav.Link>
                                 <Nav.Link as={Link} to={"/add-products"}>Add Products</Nav.Link>
-                                <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                                <NavDropdown title="coffee shop" id="collasible-nav-dropdown">
+                                    <NavDropdown.Item href="#action/3.1">Starbucks</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.2">5 to go</NavDropdown.Item>
+                                    <NavDropdown.Item href="/tucano">Tucano</NavDropdown.Item>
                                     <NavDropdown.Divider />
                                     <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                             <Nav>
+
                                 <div className='cart-menu-btn'>
                                     <Link className='navlink' to="/cart">
-                                        <Icon icon={shoppingCart} size={25}/>
+                                        <Icon icon={shoppingCart} size={25} background-color={warm_white}/>
                                     </Link>
                                     <span className='cart-indicator'>{totalProducts}</span>
                                 </div>
-                                <Nav.Link eventKey={2} href="#memes">
-                                    Dank memes
-                                </Nav.Link>
+
                             </Nav>
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
             </div>
-
+                <Banner/>
                 <div>
                     <AuthProvider>
                         <Routes>
@@ -71,6 +72,7 @@ export default function NavbarComp({totalProducts}){
                             <Route path="/add-products" element={<AddProducts />} />
                             <Route path="/products" element={<Products />} />
                             <Route path="/cart" element={<Cart />} />
+                            <Route path="/tucano" element={<TucanoDashboard />} />
 
                             <Route
                                 path="*"

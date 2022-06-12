@@ -24,7 +24,7 @@ export default function Login(){
             setTimeout(()=>{
                 setSuccessMsg('');
                 navigate('/');
-            },3000)
+            },1000)
         }).catch(error=>setErrorMsg(error.message));
     }
 
@@ -52,7 +52,7 @@ export default function Login(){
                     <div className="w-100 text-center mt-2">
                         Need an account? <Link to="/signup">Sign In</Link>
                     </div>
-                    <button type="submit" className='btn btn-success btn-md'>LOGIN</button>
+                    <button type="submit" className='btn btn-dark btn-md btn-md'>log in</button>
 
                 </div>
             </form>

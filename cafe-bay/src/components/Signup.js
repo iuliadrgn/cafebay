@@ -13,18 +13,19 @@ export default function Signup(){
 
     const [errorMsg, setErrorMsg]=useState('');
     const [successMsg, setSuccessMsg]=useState('');
+    const isAdmin = false;
 
     const handleSignup=(e)=>{
         e.preventDefault();
-        // console.log(fullName, email, password);
         auth.createUserWithEmailAndPassword(email,password).then((credentials)=>{
             console.log(credentials);
             fs.collection('users').doc(credentials.user.uid).set({
                 FullName: fullName,
                 Email: email,
-                Password: password
+                Password: password,
+                isAdmin: false
             }).then(()=>{
-                setSuccessMsg('Signup Successfull. You will now automatically get redirected to Login');
+                setSuccessMsg('Signup Successfull. You will automatically get redirected to Login');
                 setFullname('');
                 setEmail('');
                 setPassword('');
@@ -32,7 +33,7 @@ export default function Signup(){
                 setTimeout(()=>{
                     setSuccessMsg('');
                     navigate('/login');
-                },3000)
+                },1000)
             }).catch(error=>setErrorMsg(error.message));
         }).catch((error)=>{
             setErrorMsg(error.message)
@@ -66,7 +67,7 @@ export default function Signup(){
                     <div className="w-100 text-center mt-2">
                         Already have an account? <Link to="/login">Log In</Link>
                     </div>
-                    <button type="submit" className='btn btn-success btn-md'>SIGN UP</button>
+                    <button type="submit" className='btn btn-dark btn-md'>sign up</button>
                 </div>
             </form>
             {errorMsg&&<>
