@@ -15,9 +15,8 @@ export default function Login(){
 
     const handleLogin=(e)=>{
         e.preventDefault();
-        // console.log(email, password);
         auth.signInWithEmailAndPassword(email,password).then(()=>{
-            setSuccessMsg('Login Successfull. You will now automatically get redirected to Home page');
+            setSuccessMsg('Login Successful. You will get redirected to the Home page');
             setEmail('');
             setPassword('');
             setErrorMsg('');

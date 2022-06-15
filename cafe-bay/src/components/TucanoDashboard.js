@@ -8,12 +8,6 @@ import {useNavigate} from "react-router-dom";
 import IndividualFilteredProduct from "./IndividualFilteredProduct";
 
 
-const MenuStyled = styled.div`
-border: 2px black;
-height: 1000px;
-margin: 30px 100px 100px 100px;
-`;
-
 export default function TucanoDashboard(props){
 
     function GetUserUid(){

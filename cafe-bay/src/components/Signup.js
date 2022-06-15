@@ -25,7 +25,7 @@ export default function Signup(){
                 Password: password,
                 isAdmin: false
             }).then(()=>{
-                setSuccessMsg('Signup Successfull. You will automatically get redirected to Login');
+                setSuccessMsg('Signup Successful. You will get redirected to Login');
                 setFullname('');
                 setEmail('');
                 setPassword('');

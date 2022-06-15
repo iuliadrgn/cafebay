@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import {Alert, Button, Card} from "react-bootstrap";
-import { useAuth} from "../contexts/AuthContext";
-import {Link, useNavigate} from "react-router-dom";
 import {fs,storage} from "../contexts/firebase";
 
 export default function AddProducts() {
@@ -35,8 +32,6 @@ export default function AddProducts() {
 
     const handleAddProducts = (e) => {
         e.preventDefault();
-        // console.log(title, description, price);
-        // console.log(image);
         const uploadTask = storage.ref(`product-images/${image.name}`).put(image);
         uploadTask.on('state_changed', snapshot => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100

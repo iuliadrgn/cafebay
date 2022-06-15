@@ -6,6 +6,7 @@ import {Coffee, CoffeeGrid} from "./CoffeeGrid";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import IndividualFilteredProduct from "./IndividualFilteredProduct";
+import {Banner} from "./Banner/Banner";
 
 
 export default function Home(props){
@@ -143,11 +144,8 @@ export default function Home(props){
 
 
     return (
-
         <>
             <div>
-
-
             <div className='container-fluid filter-products-main-box'>
 
                 <div className='filter-box'>
