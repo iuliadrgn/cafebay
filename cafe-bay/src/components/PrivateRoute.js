@@ -3,10 +3,9 @@ import Navigate from "react";
 import {auth, fs} from "../contexts/firebase";
 import {Outlet} from "react-router-dom";
 import Home from "./Home";
-import AddProducts from "./AddProducts";
+
 
 export default function ProtectedRoutes() {
-
 
     function GetUserUid(){
         const [uid, setUid]=useState(null);
@@ -42,10 +41,6 @@ export default function ProtectedRoutes() {
 
     const user = GetCurrentUser();
     console.log(user);
-
-
-    //     return isAdministrator ? <AddProducts/> : <Home/>;
-
     return user ? <Outlet/> : <Home/>
 }
 

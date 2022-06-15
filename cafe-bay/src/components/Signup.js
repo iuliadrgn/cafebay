@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import {auth, fs} from "../contexts/firebase";
 import {Link} from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
+import {Banner} from "./Banner/Banner";
 
 export default function Signup(){
 
@@ -41,6 +42,8 @@ export default function Signup(){
     }
 
     return (
+        <>
+            <Banner/>
         <div className='container'>
             <br></br>
             <br></br>
@@ -75,5 +78,6 @@ export default function Signup(){
                 <div className='error-msg'>{errorMsg}</div>
             </>}
         </div>
+        </>
     )
 }

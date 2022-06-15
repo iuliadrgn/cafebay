@@ -6,6 +6,7 @@ import {Coffee, CoffeeGrid} from "./CoffeeGrid";
 import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import IndividualFilteredProduct from "./IndividualFilteredProduct";
+import {TucanoBanner} from "./Banner/TucanoBanner";
 
 
 export default function TucanoDashboard(props){
@@ -110,6 +111,7 @@ export default function TucanoDashboard(props){
     }
 
     const filterFunction = ()=>{
+
         if(product.length>1){
             const filter=product.filter((product)=> product.store==="Tucano");
             setFilteredProducts(filter);
@@ -134,12 +136,9 @@ export default function TucanoDashboard(props){
     return (
 
         <>
+            <TucanoBanner/>
             <div>
-                <form onSubmit={(e)=> {searchCoffee(e)}}>
-                    <input onChange={(e)=>{setSearch(e.target.value)}}/>
-                    <button type = "submit">Search</button>
-
-
+                <form onSubmit={handleChange}>
                     <div className='container-fluid filter-products-main-box'>
 
                         {filteredProducts.length > 0 && product.store==="Tucano"&&(
@@ -159,7 +158,7 @@ export default function TucanoDashboard(props){
                             <>
                                 {product.length > 0 && (
                                     <div className='my-products'>
-                                        <h1 className='text-center'>All Products</h1>
+                                        <h1 className='text-center'>Tucano Products</h1>
                                         <div className='products-box'>
 
                                             <Products product={product} addToCart={addToCart}/>

@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {Component, useEffect, useState} from "react";
 import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import {Container} from "react-bootstrap";
 import {BrowserRouter as Router, Navigate, Route, Routes, Link, useNavigate} from "react-router-dom";
@@ -11,7 +11,7 @@ import Signup from "./Signup";
 import AddProducts from "./AddProducts";
 import {Banner} from "./Banner/Banner";
 import Home from "./Home";
-import {auth} from "../contexts/firebase";
+import {auth, fs} from "../contexts/firebase";
 import {Icon} from 'react-icons-kit'
 import {shoppingCart} from 'react-icons-kit/feather/shoppingCart'
 import AuthProvider from "../contexts/AuthContext";
@@ -20,16 +20,57 @@ import Cart from "./Cart";
 import TucanoDashboard from "./TucanoDashboard";
 import {warm_white} from "../styles/colors";
 import ProtectedRoutes from "./PrivateRoute";
+import AlreadyLogged from "./AlreadyLogged";
 
 export default function NavbarComp({totalProducts}){
+    let [userLoggedOut] = useState(true);
+    function GetUserUid(){
+        const [uid, setUid]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    setUid(user.uid);
+                }
+            })
+        },[])
+        return uid;
+    }
 
+    const uid = GetUserUid();
+    console.log(uid);
+
+    function GetCurrentUser(){
+        const [user, setUser]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setUser(snapshot.data().FullName);
+                    })
+                }
+                else{
+                    setUser(null);
+                }
+            })
+        },[])
+        return user;
+    }
+
+    if(uid!==null){
+        userLoggedOut=false;
+    }else{
+        userLoggedOut=true;
+    }
+
+    const user = GetCurrentUser();
+    console.log(user);
         return(
             <Router>
 
             <div>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" totalProducts={totalProducts}>
                     <Container>
-                        <Navbar.Brand href="#home">Cafe Bay<span role="img" aria-label="coffee">☕</span></Navbar.Brand>
+                        <Navbar.Brand href="/home">Cafe Bay<span role="img" aria-label="coffee">☕</span></Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
@@ -57,22 +98,32 @@ export default function NavbarComp({totalProducts}){
                     </Container>
                 </Navbar>
             </div>
-                <Banner/>
+
                 <div>
                     <AuthProvider>
                         <Routes>
                             <Route path="/home" element={<Home />} />
                             <Route path="/" element={<Navigate to={"/home"}/>}></Route>
                             <Route path="/signup" element={<Signup />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/profile" element={<Profile />} />
+                            <Route
+                                path="/login"
+                                element={!userLoggedOut ? <Navigate to="/already-logged"/> : <Login/>} />
+                            <Route
+                                path="/profile"
+                                element={userLoggedOut ? <Navigate to="/login"/> : <Profile/>}/>
                             <Route path="/forgot-password" element={<ForgotPassword />} />
-                            <Route path="/update-profile" element={<UpdateProfile />} />
+                            <Route
+                                path="/update-profile"
+                                element={userLoggedOut ? <Navigate to="/home"/> : <UpdateProfile/>}
+                            />
                             <Route element={<ProtectedRoutes />}>
                                 <Route path="/add-products" element={<AddProducts />} />
                             </Route>
                             <Route path="/products" element={<Products />} />
                             <Route path="/cart" element={<Cart />} />
+                            <Route
+                                path="/already-logged"
+                                element={userLoggedOut ? <Navigate to="/home"/> : <AlreadyLogged/>} />
                             <Route path="/tucano" element={<TucanoDashboard />} />
 
                             <Route

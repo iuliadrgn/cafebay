@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from "./Modal";
+import {Banner} from "./Banner/Banner";
 
 toast.configure();
 
@@ -152,6 +153,7 @@ export default function Cart(){
 
     return(
         <>
+            <Banner/>
             {cartProducts.length > 0 && (
                 <div className='container-fluid'>
                     <h1 className='text-center'>Cart</h1>

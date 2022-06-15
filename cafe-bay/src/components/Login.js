@@ -1,10 +1,47 @@
-import React,{useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
-import {auth} from "../contexts/firebase";
+import {auth, fs} from "../contexts/firebase";
+import {Banner} from "./Banner/Banner";
 
 
 export default function Login(){
 
+    function GetUserUid(){
+        const [uid, setUid]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    setUid(user.uid);
+                }
+            })
+        },[])
+        return uid;
+    }
+
+    const uid = GetUserUid();
+    console.log(uid);
+
+    function GetCurrentUser(){
+        const [user, setUser]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setUser(snapshot.data().FullName);
+                    })
+                }
+                else{
+                    setUser(null);
+                }
+            })
+        },[])
+        return user;
+    }
+
+    const user = GetCurrentUser();
+    console.log(user);
+
+    let [userLoggedOut] = useState(false);
     const navigate = useNavigate();
 
     const [email, setEmail]=useState('');
@@ -28,11 +65,16 @@ export default function Login(){
     }
 
     return (
+
+        <>
+            <Banner/>
         <div className='container'>
+
             <br></br>
             <br></br>
             <h1>Login</h1>
             <hr></hr>
+
             {successMsg&&<>
                 <div className='success-msg'>{successMsg}</div>
                 <br></br>
@@ -63,5 +105,6 @@ export default function Login(){
                 <div className='error-msg'>{errorMsg}</div>
             </>}
         </div>
+        </>
     )
 }
