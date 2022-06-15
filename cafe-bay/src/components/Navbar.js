@@ -19,6 +19,7 @@ import {Products} from "./Products";
 import Cart from "./Cart";
 import TucanoDashboard from "./TucanoDashboard";
 import {warm_white} from "../styles/colors";
+import ProtectedRoutes from "./PrivateRoute";
 
 export default function NavbarComp({totalProducts}){
 
@@ -40,8 +41,6 @@ export default function NavbarComp({totalProducts}){
                                     <NavDropdown.Item href="#action/3.1">Starbucks</NavDropdown.Item>
                                     <NavDropdown.Item href="#action/3.2">5 to go</NavDropdown.Item>
                                     <NavDropdown.Item href="/tucano">Tucano</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                             <Nav>
@@ -69,7 +68,9 @@ export default function NavbarComp({totalProducts}){
                             <Route path="/profile" element={<Profile />} />
                             <Route path="/forgot-password" element={<ForgotPassword />} />
                             <Route path="/update-profile" element={<UpdateProfile />} />
-                            <Route path="/add-products" element={<AddProducts />} />
+                            <Route element={<ProtectedRoutes />}>
+                                <Route path="/add-products" element={<AddProducts />} />
+                            </Route>
                             <Route path="/products" element={<Products />} />
                             <Route path="/cart" element={<Cart />} />
                             <Route path="/tucano" element={<TucanoDashboard />} />

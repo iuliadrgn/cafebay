@@ -7,16 +7,6 @@ import firebase from 'firebase/compat/app';
 import "firebase/compat/auth";
 import Signup from "./Signup";
 import {Container} from "react-bootstrap";
-import AuthProvider from "../contexts/AuthContext";
-import {BrowserRouter as Router, Navigate, Route, Routes} from "react-router-dom";
-import Login from "./Login";
-import Profile from "./Profile";
-import PrivateRoute from "./PrivateRoute";
-import ForgotPassword from "./ForgotPassword";
-import UpdateProfile from "./UpdateProfile";
-import AddProducts from "./AddProducts";
-import {Products} from "./Products";
-import Home from "./Home";
 import NavbarComp, {Navbar} from "./Navbar";
 import {auth, fs} from "../contexts/firebase";
 

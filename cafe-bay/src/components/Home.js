@@ -2,8 +2,6 @@ import React,{useState, useEffect} from 'react'
 import Navbar from './Navbar'
 import {Products} from "./Products";
 import {auth, fs} from "../contexts/firebase";
-import {Coffee, CoffeeGrid} from "./CoffeeGrid";
-import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import IndividualFilteredProduct from "./IndividualFilteredProduct";
 import {Banner} from "./Banner/Banner";
