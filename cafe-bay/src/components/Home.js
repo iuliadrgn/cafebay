@@ -155,6 +155,7 @@ export default function Home(props){
                               className={individualSpan.id===active ? active:'deactive'}>{individualSpan.text}</span>
                     ))}
                 </div>
+
                 {filteredProducts.length > 0&&(
                     <div className='my-products'>
                         <h1 className='text-center'>{category}</h1>
@@ -168,6 +169,7 @@ export default function Home(props){
                         </div>
                     </div>
                 )}
+
                 {filteredProducts.length < 1&&(
                     <>
                         {product.length > 0&&(
@@ -179,8 +181,13 @@ export default function Home(props){
                                 </div>
                             </div>
                         )}
+
                         {product.length < 1&&(
-                            <div className='my-products please-wait'>Please wait...</div>
+
+                            <h4 className='text-center text-black-50'>
+                                <br/>
+                                Please wait...
+                            </h4>
                         )}
                     </>
                 )}

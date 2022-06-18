@@ -1,5 +1,4 @@
 import React,{useState, useEffect} from 'react'
-import Navbar from './Navbar'
 import {Products} from "./Products";
 import {auth, fs} from "../contexts/firebase";
 import {Coffee, CoffeeGrid} from "./CoffeeGrid";
@@ -7,9 +6,9 @@ import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
 import IndividualFilteredProduct from "./IndividualFilteredProduct";
 import {TucanoBanner} from "./Banner/TucanoBanner";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
-
-export default function TucanoDashboard(props){
+export default function TucanoDashboard(){
 
     function GetUserUid(){
         const [uid, setUid]=useState(null);
@@ -50,7 +49,9 @@ export default function TucanoDashboard(props){
 
     async function getProducts(){
 
-        const product = await fs.collection('Products').get()
+        const q = query(collection(fs, "Products"), where("store", "==", "Tucano"));
+
+        const product = await getDocs(q);
         const productsArray = []
 
         for (let snap of product.docs){
@@ -68,18 +69,6 @@ export default function TucanoDashboard(props){
 
     useEffect(()=>{ getProducts()},[])
 
-    const[coffees, setCoffees] = useState([]);
-    const[search, setSearch] = useState("");
-
-    const searchCoffee=(e)=>{
-        e.preventDefault();
-        setCoffees(coffees.filter((coffee)=>
-            coffees.title.toLowerCase().includes(search.toLowerCase())
-        ));
-
-    };
-
-
     const navigate = useNavigate()
     let Product;
 
@@ -87,74 +76,24 @@ export default function TucanoDashboard(props){
         if(uid!==null){
             console.log(product);
             Product=product;
-            Product['qty']=1;
-            Product['TotalProductPrice']=Product.qty*Product.price;
+            Product['qty'] = 1;
+            Product['TotalProductPrice'] = Product.qty * Product.price;
             fs.collection('Cart ' + uid).doc(product.ID).set(Product).then(()=>{
-                console.log('successfully added to cart');
+                console.log('product successfully added to order');
             })
-
         }
         else{
             navigate('/login')
-
-        }
-
-    }
-
-    const [active, setActive]=useState('');
-    const [store, setStore]=useState('');
-
-    const handleChange=(individualSpan)=>{
-        setActive(individualSpan.id);
-        setStore(individualSpan.text);
-        filterFunction(individualSpan.text);
-    }
-
-    const filterFunction = ()=>{
-
-        if(product.length>1){
-            const filter=product.filter((product)=> product.store==="Tucano");
-            setFilteredProducts(filter);
-        }
-        else{
-            console.log('no products to filter')
         }
     }
-
-    const [filteredProducts, setFilteredProducts]=useState([]);
-
-
-    const returntoAllProducts=()=>{
-        setActive('');
-        setStore('');
-        setFilteredProducts([]);
-
-    }
-
-
 
     return (
-
         <>
             <TucanoBanner/>
             <div>
-                <form onSubmit={handleChange}>
+                <form onSubmit={getProducts}>
                     <div className='container-fluid filter-products-main-box'>
 
-                        {filteredProducts.length > 0 && product.store==="Tucano"&&(
-                            <div className='my-products'>
-                                <h1 className='text-center'>{store}</h1>
-                                <a href="javascript:void(0)" onClick={returntoAllProducts}>Return to All Products</a>
-                                <div className='products-box'>
-                                    {filteredProducts.map(individualFilteredProduct=>(
-                                        <IndividualFilteredProduct key={individualFilteredProduct.ID}
-                                                                   individualFilteredProduct={individualFilteredProduct}
-                                                                   addToCart={addToCart}/>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-                        {filteredProducts.length < 1 &&(
                             <>
                                 {product.length > 0 && (
                                     <div className='my-products'>
@@ -163,15 +102,17 @@ export default function TucanoDashboard(props){
 
                                             <Products product={product} addToCart={addToCart}/>
 
-
                                         </div>
                                     </div>
                                 )}
                                 {product.length < 1&&(
-                                    <div className='my-products please-wait'>Please wait...</div>
+                                    <h4 className='text-center text-black-50'>
+                                        <br/>
+                                        Please wait...
+                                    </h4>
                                 )}
                             </>
-                        )}
+                        }
 
                     </div>
                 </form>

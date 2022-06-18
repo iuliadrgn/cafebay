@@ -4,8 +4,8 @@ import {formatPrice} from "./CoffeeData";
 import styled from "styled-components";
 
 export default function IndividualProduct({individualProduct, addToCart}){
-   // console.log(individualProduct);
-    const handleAddToCart=()=>{
+
+    const handleAddToCart = () => {
         addToCart(individualProduct)
     }
     return (
@@ -17,7 +17,7 @@ export default function IndividualProduct({individualProduct, addToCart}){
                 <img src={individualProduct.url} alt="product-img"/>
                 <div className='product-text description'>{individualProduct.description}</div>
 
-            <div className='btn btn-danger btn-md cart-btn' onClick={handleAddToCart}>add to order</div>
+            <div className='btn btn-danger btn-md cart-btn btn-box' onClick={handleAddToCart}>add to order</div>
             </div>
 
     )

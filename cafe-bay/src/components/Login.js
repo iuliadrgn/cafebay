@@ -41,7 +41,7 @@ export default function Login(){
     const user = GetCurrentUser();
     console.log(user);
 
-    let [userLoggedOut] = useState(false);
+  //  let [userLoggedOut] = useState(false);
     const navigate = useNavigate();
 
     const [email, setEmail]=useState('');
@@ -53,7 +53,7 @@ export default function Login(){
     const handleLogin=(e)=>{
         e.preventDefault();
         auth.signInWithEmailAndPassword(email,password).then(()=>{
-            setSuccessMsg('Login Successful. You will get redirected to the Home page');
+            setSuccessMsg('Login Successful');
             setEmail('');
             setPassword('');
             setErrorMsg('');
@@ -69,41 +69,51 @@ export default function Login(){
         <>
             <Banner/>
         <div className='container'>
-
-            <br></br>
-            <br></br>
+            <br/>
             <h1>Login</h1>
-            <hr></hr>
-
+            <hr/>
             {successMsg&&<>
                 <div className='success-msg'>{successMsg}</div>
-                <br></br>
-            </>}
+                <br/>
+            </>
+            }
             <form className='form-group' autoComplete="off"
                   onSubmit={handleLogin}>
-                <label>Email</label>
-                <input type="email" className='form-control' required
-                       onChange={(e)=>setEmail(e.target.value)} value={email}></input>
-                <br></br>
-                <label>Password</label>
-                <input type="password" className='form-control' required
-                       onChange={(e)=>setPassword(e.target.value)} value={password}></input>
-                <br></br>
-                <div className='btn-box'>
-                    <div className="w-100 text-center mt-2">
-                        Need an account? <Link to="/signup">Sign In</Link>
-                    </div>
-                    <button type="submit" className='btn btn-dark btn-md btn-md'>log in</button>
+                <label>email</label>
+                <input type="email"
+                       className='form-control'
+                       required
+                       onChange={(e)=>setEmail(e.target.value)} value={email}>
 
+                </input>
+                <br/>
+                <label>password</label>
+                <input type="password"
+                       className='form-control'
+                       required
+                       onChange={(e)=>setPassword(e.target.value)} value={password}></input>
+                <br/>
+                <div>
+                    <div className="w-100 text-center mt-2">
+                        Need an account?
+                        <Link to="/signup">
+                             Sign In
+                        </Link>
+                    </div>
+                    <br/>
+                    <div align="center">
+                    <button type="submit" className='btn btn-dark btn-md btn-box w-25'>log in</button>
+                    </div>
                 </div>
             </form>
             <div className="w-100 text-center mt-3">
                 <Link to="/forgot-password">forgot password?</Link>
             </div>
             {errorMsg&&<>
-                <br></br>
+                <br/>
                 <div className='error-msg'>{errorMsg}</div>
-            </>}
+            </>
+            }
         </div>
         </>
     )

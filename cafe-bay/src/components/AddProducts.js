@@ -2,37 +2,42 @@ import React, { useState } from "react";
 import {fs,storage} from "../contexts/firebase";
 
 export default function AddProducts() {
+
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [category, setCategory]=useState('');
     const [store, setStore]=useState('');
     const [image, setImage] = useState(null);
-
     const [imageError, setImageError] = useState('');
-
     const [successMsg, setSuccessMsg] = useState('');
     const [uploadError, setUploadError] = useState('');
-
     const types = ['image/jpg', 'image/jpeg', 'image/png', 'image/PNG'];
+
     const handleProductImg = (e) => {
         let selectedFile = e.target.files[0];
-        if (selectedFile) {
-            if (selectedFile && types.includes(selectedFile.type)) {
+        if (selectedFile){
+
+            if (selectedFile && types.includes(selectedFile.type)){
                 setImage(selectedFile);
                 setImageError('');
-            } else {
-                setImage(null);
-                setImageError('please select a valid image file type (png or jpg)')
             }
-        } else {
-            console.log('please select your file');
+            else{
+                setImage(null);
+                setImageError('please select a jpg or png file')
+            }
+        }
+        else{
+            console.log('please select an image file');
         }
     }
 
     const handleAddProducts = (e) => {
+
         e.preventDefault();
+
         const uploadTask = storage.ref(`product-images/${image.name}`).put(image);
+
         uploadTask.on('state_changed', snapshot => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             console.log(progress);
@@ -46,7 +51,7 @@ export default function AddProducts() {
                     price: Number(price),
                     url
                 }).then(() => {
-                    setSuccessMsg('Product added successfully');
+                    setSuccessMsg('The product was added successfully');
                     setProductName('');
                     setDescription('');
                     setCategory('');
@@ -65,29 +70,29 @@ export default function AddProducts() {
 
     return (
         <div className='container'>
-            <br></br>
-            <br></br>
+            <br/>
             <h1>Add Products</h1>
-            <hr></hr>
+            <hr/>
             {successMsg && <>
                 <div className='success-msg'>{successMsg}</div>
-                <br></br>
+                <br/>
             </>}
             <form autoComplete="off" className='form-group' onSubmit={handleAddProducts}>
                 <label>Product Name</label>
                 <input type="text" className='form-control' required
                        onChange={(e) => setProductName(e.target.value)} value={productName}></input>
-                <br></br>
+                <br/>
                 <label>Product Description</label>
                 <input type="text" className='form-control' required
                        onChange={(e) => setDescription(e.target.value)} value={description}></input>
-                <br></br>
-                <label>Product Price</label>
+                <br/>
+                <label>Price</label>
                 <input type="number" className='form-control' required
                        onChange={(e) => setPrice(e.target.value)} value={price}></input>
-                <br></br>
+                <br/>
 
                 <label>Product Category</label>
+
                 <select className='form-control' required
                         value={category} onChange={(e)=>setCategory(e.target.value)}>
                     <option value="">Select Product Category</option>
@@ -101,7 +106,7 @@ export default function AddProducts() {
                     <option>Snacks</option>
 
                 </select>
-                <br></br>
+               <br/>
 
                 <label>Store</label>
                 <select className='form-control' required
@@ -110,9 +115,8 @@ export default function AddProducts() {
                     <option>Starbucks</option>
                     <option>Tucano</option>
                     <option>5 to go</option>
-
                 </select>
-                <br></br>
+                <br/>
 
                 <label>Upload Product Image</label>
                 <input type="file" id="file" className='form-control' required

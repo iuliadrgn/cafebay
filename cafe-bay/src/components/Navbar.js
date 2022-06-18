@@ -4,12 +4,10 @@ import {Container} from "react-bootstrap";
 import {BrowserRouter as Router, Navigate, Route, Routes, Link, useNavigate} from "react-router-dom";
 import Login from "./Login";
 import Profile from "./Profile";
-import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Signup from "./Signup";
 import AddProducts from "./AddProducts";
-import {Banner} from "./Banner/Banner";
 import Home from "./Home";
 import {auth, fs} from "../contexts/firebase";
 import {Icon} from 'react-icons-kit'
@@ -21,6 +19,8 @@ import TucanoDashboard from "./TucanoDashboard";
 import {warm_white} from "../styles/colors";
 import ProtectedRoutes from "./PrivateRoute";
 import AlreadyLogged from "./AlreadyLogged";
+import StarbucksDashboard from "./StarbucksDashboard";
+import FiveToGoDashboard from "./FiveToGoDashboard";
 
 export default function NavbarComp({totalProducts}){
     let [userLoggedOut] = useState(true);
@@ -66,7 +66,6 @@ export default function NavbarComp({totalProducts}){
     console.log(user);
         return(
             <Router>
-
             <div>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" totalProducts={totalProducts}>
                     <Container>
@@ -75,17 +74,17 @@ export default function NavbarComp({totalProducts}){
                         <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="me-auto">
                                 <Nav.Link as={Link} to={"/home"}>Home</Nav.Link>
+                                <Nav.Link as={Link} to={"/signup"}>Signup</Nav.Link>
                                 <Nav.Link as={Link} to={"/login"}>Login</Nav.Link>
                                 <Nav.Link as={Link} to={"/profile"}>Profile</Nav.Link>
                                 <Nav.Link as={Link} to={"/add-products"}>Add Products</Nav.Link>
                                 <NavDropdown title="coffee shop" id="collasible-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Starbucks</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">5 to go</NavDropdown.Item>
+                                    <NavDropdown.Item href="/starbucks">Starbucks</NavDropdown.Item>
+                                    <NavDropdown.Item href="/5togo">5 to go</NavDropdown.Item>
                                     <NavDropdown.Item href="/tucano">Tucano</NavDropdown.Item>
                                 </NavDropdown>
                             </Nav>
                             <Nav>
-
                                 <div className='cart-menu-btn'>
                                     <Link className='navlink' to="/cart">
                                         <Icon icon={shoppingCart} size={25} background-color={warm_white}/>
@@ -125,7 +124,8 @@ export default function NavbarComp({totalProducts}){
                                 path="/already-logged"
                                 element={userLoggedOut ? <Navigate to="/home"/> : <AlreadyLogged/>} />
                             <Route path="/tucano" element={<TucanoDashboard />} />
-
+                            <Route path="/starbucks" element={<StarbucksDashboard />} />
+                            <Route path="/5togo" element={<FiveToGoDashboard />} />
                             <Route
                                 path="*"
                                 element={<Navigate to="/" replace />}

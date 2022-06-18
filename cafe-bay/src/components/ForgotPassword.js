@@ -11,7 +11,7 @@ export default function ForgotPassword(){
     const [error, setError] = useState('')
     const [message, setMessage] = useState('')
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
+
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -19,14 +19,11 @@ export default function ForgotPassword(){
         try {
             setMessage('')
             setError('')
-            //setLoading(true)
             await resetPassword(emailRef.current.value)
-            setMessage('check ur inbox')
-            //navigate("/")
+            setMessage('check your email for more instructions')
         } catch {
             setError('failed to reset the password')
         }
-        // setLoading(false)
     }
 
     return(
@@ -53,7 +50,7 @@ export default function ForgotPassword(){
                 </Card.Body>
             </Card>
             <div className="w-100 text-center mt-2">
-                Need an account? <Link to="/signup">Sign In</Link>
+                Need an account? <Link to="/signup">Sign Up</Link>
             </div>
         </>
     )

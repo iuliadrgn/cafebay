@@ -18,15 +18,15 @@ export default function Signup(){
 
     const handleSignup=(e)=>{
         e.preventDefault();
-        auth.createUserWithEmailAndPassword(email,password).then((credentials)=>{
+        auth.createUserWithEmailAndPassword(email,password).then((credentials) => {
             console.log(credentials);
             fs.collection('users').doc(credentials.user.uid).set({
                 FullName: fullName,
                 Email: email,
                 Password: password,
                 isAdmin: false
-            }).then(()=>{
-                setSuccessMsg('Signup Successful. You will get redirected to Login');
+            }).then( () => {
+                setSuccessMsg('Signup Successful');
                 setFullname('');
                 setEmail('');
                 setPassword('');
@@ -45,36 +45,38 @@ export default function Signup(){
         <>
             <Banner/>
         <div className='container'>
-            <br></br>
-            <br></br>
+            <br/>
             <h1>Sign Up</h1>
-            <hr></hr>
+            <hr/>
             {successMsg&&<>
                 <div className='success-msg'>{successMsg}</div>
-                <br></br>
+                <br/>
             </>}
             <form className='form-group' autoComplete="off" onSubmit={handleSignup}>
-                <label>Full Name</label>
+                <label>name</label>
                 <input type="text" className='form-control' required
                        onChange={(e)=>setFullname(e.target.value)} value={fullName}></input>
-                <br></br>
-                <label>Email</label>
+                <br/>
+                <label>email</label>
                 <input type="email" className='form-control' required
                        onChange={(e)=>setEmail(e.target.value)} value={email}></input>
-                <br></br>
-                <label>Password</label>
+                <br/>
+                <label>password</label>
                 <input type="password" className='form-control' required
                        onChange={(e)=>setPassword(e.target.value)} value={password}></input>
-                <br></br>
-                <div className='btn-box'>
+                <br/>
+                <div>
                     <div className="w-100 text-center mt-2">
                         Already have an account? <Link to="/login">Log In</Link>
                     </div>
-                    <button type="submit" className='btn btn-dark btn-md'>sign up</button>
+                    <br/>
+                    <div align="center">
+                    <button type="submit" className='btn btn-dark btn-md btn-box w-25'>sign up</button>
+                    </div>
                 </div>
             </form>
             {errorMsg&&<>
-                <br></br>
+                <br/>
                 <div className='error-msg'>{errorMsg}</div>
             </>}
         </div>

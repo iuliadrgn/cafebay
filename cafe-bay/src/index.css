@@ -1,3 +1,8 @@
+link {
+    color: saddlebrown;
+    background-color: transparent;
+    text-decoration: none;
+}
 .cart-menu-btn .cart-indicator{
     width: 13px;
     height: 13px;
@@ -69,7 +74,7 @@
     box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1);
 }
 .btn-box:hover {
-    box-shadow: 5px 5px 20px 0px rgba(10, 0, 0, 1);
+    box-shadow: 5px 5px 20px 0px rgba(10, 0, 0, 0.8);
 }
 
 
@@ -83,8 +88,8 @@
     border: 1px solid #b9b5b5;
     border-radius: 8px;
 }
-.product .quantity-box .action-btns{
-    font-weight: 600;
+.product .quantity-box .action-buttons{
+    font-weight: 700;
     cursor: pointer;
 }
 
@@ -145,8 +150,8 @@
     border-radius: 8px;
 }
 
-.product .quantity-box .action-btns{
-    font-weight: 600;
+.product .quantity-box .action-buttons{
+    font-weight: 500;
     cursor: pointer;
 }
 .link{
@@ -162,7 +167,7 @@
     justify-content: space-between;
 }
 
-.summary-box{
+.order-summary{
     width: 300px;
     margin: 30px auto;
     border: 1px solid #b9b5b5;
@@ -171,14 +176,14 @@
     padding: 30px;
 }
 
-.summary-box h5{
+.order-summary h5{
     display: flex;
-    border-bottom: 1px solid #e00a02;
+    border-bottom: 1px solid #753314;
     text-align: center;
     padding: 0px;
 }
 
-.summary-box div{
+.order-summary div{
     display: flex;
     justify-content: space-between;
 }
@@ -205,7 +210,7 @@
 }
 
 .delete-icon{
-    background-color: #e00a02;
+    background-color: #753314;
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -228,7 +233,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -237,7 +242,7 @@
 .modal-container{
     width: 300px;
     height: auto;
-    padding: 20px;
+    padding: 30px;
     background-color: #fff;
     position: relative;
 }
@@ -255,11 +260,11 @@
 
 .filter-products-main-box .my-products{
     flex: 3.3;
-    /* border: 1px solid green; */
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
 }
 
 @media(max-width: 540px){
@@ -293,12 +298,12 @@
 
 .filter-box span{
     cursor: pointer;
-    margin: 15px 0px;
-    font-size: 14px;
+    margin: 13px 0px;
+    font-size: 15px;
 }
 
 .filter-box span.HotCoffeeDrinks{
-    color: #753314;
+    color: #eb946e;
 }
 
 .filter-box span.ColdCoffeeDrinks{
@@ -340,11 +345,13 @@
 
 .product:hover {
     box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1);
+    filter: contrast(90%);
 }
 
 @media(min-width: 768px){
     .product{
         width: 300px;
+
     }
 }
 
@@ -360,7 +367,7 @@
 
 .product .product-text{
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 17px;
     text-align: center;
 }
 
@@ -372,7 +379,8 @@
 }
 
 .product .product-text.description{
-    height: 50px;
+    height: 30px;
+    contrast: 90%;
     overflow: hidden;
 }
 

@@ -1,17 +1,12 @@
 import React,{useState, useEffect} from 'react'
-import Navbar from './Navbar'
 import {Products} from "./Products";
 import {auth, fs} from "../contexts/firebase";
-import {Coffee, CoffeeGrid} from "./CoffeeGrid";
-import styled from "styled-components";
 import {useNavigate} from "react-router-dom";
-import IndividualFilteredProduct from "./IndividualFilteredProduct";
-import {TucanoBanner} from "./Banner/TucanoBanner";
-import {StarbucksBanner} from "./Banner/StarbucksBanner";
+import {FiveToGoBanner} from "./Banner/FiveToGoBanner";
 import {collection, getDocs, query, where} from "firebase/firestore";
 
 
-export default function StarbucksDashboard(){
+export default function FiveToGoDashboard(){
     function GetUserUid(){
         const [uid, setUid]=useState(null);
         useEffect(()=>{
@@ -51,7 +46,7 @@ export default function StarbucksDashboard(){
 
     async function getProducts(){
 
-        const q = query(collection(fs, "Products"), where("store", "==", "Starbucks"));
+        const q = query(collection(fs, "Products"), where("store", "==", "5 to go"));
 
         const product = await getDocs(q);
         const productsArray = []
@@ -91,7 +86,7 @@ export default function StarbucksDashboard(){
 
     return (
         <>
-            <StarbucksBanner/>
+            <FiveToGoBanner/>
             <div>
                 <form onSubmit={getProducts}>
                     <div className='container-fluid filter-products-main-box'>
@@ -99,7 +94,7 @@ export default function StarbucksDashboard(){
                         <>
                             {product.length > 0 && (
                                 <div className='my-products'>
-                                    <h1 className='text-center'>Starbucks Products</h1>
+                                    <h1 className='text-center'>5 To Go Products</h1>
                                     <div className='products-box'>
 
                                         <Products product={product} addToCart={addToCart}/>
@@ -115,7 +110,6 @@ export default function StarbucksDashboard(){
                             )}
                         </>
                         }
-
                     </div>
                 </form>
             </div>

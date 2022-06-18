@@ -1,7 +1,9 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Form, Card, Button, Alert } from "react-bootstrap";
 import { useAuth} from "../contexts/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
+import {auth, fs} from "../contexts/firebase";
+import {Banner} from "./Banner/Banner";
 
 
 export default function UpdateProfile(){
@@ -13,6 +15,40 @@ export default function UpdateProfile(){
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
 
+    function GetUserUid(){
+        const [uid, setUid]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    setUid(user.uid);
+                }
+            })
+        },[])
+        return uid;
+    }
+
+    const uid = GetUserUid();
+
+    function GetCurrentUser(){
+        const [user, setUser]=useState(null);
+        useEffect(()=>{
+            auth.onAuthStateChanged(user=>{
+                if(user){
+                    fs.collection('users').doc(user.uid).get().then(snapshot=>{
+                        setUser(snapshot.data().FullName);
+                    })
+                }
+                else{
+                    setUser(null);
+                }
+            })
+        },[])
+        return user;
+    }
+
+    const user = GetCurrentUser();
+
+
     function handleSubmit(e) {
         e.preventDefault()
 
@@ -23,10 +59,15 @@ export default function UpdateProfile(){
         const promises = []
         setError("")
         if(emailRef.current.value !== currentUser.email){
-            promises.push(updateEmail(emailRef.current.value))
-        }
+
+          currentUser.updateEmail(emailRef.current.value);
+            fs.collection('users').doc(user.uid).set({
+                Email: emailRef}
+            )}
+
         if(passwordRef.current.value){
-            promises.push(updatePassword(passwordRef.current.value))
+
+            currentUser.updatePassword(passwordRef.current.value)
         }
 
         Promise.all(promises).then(() =>{
@@ -38,19 +79,17 @@ export default function UpdateProfile(){
         })
 
         try {
-            //setLoading(true)
             setError('')
-            //await signin(emailRef.current.value, passwordRef.current.value)
             navigate("/login")
         } catch {
             setError('failed to create an account')
         }
-        //setLoading(false)
-        // history.push("/")
+
     }
 
     return(
         <>
+            <Banner/>
             <Card>
                 <Card.Body>
                     <h2 className="text-center mb-4">Update Profile</h2>
@@ -68,13 +107,18 @@ export default function UpdateProfile(){
                             <Form.Label>password confirmation</Form.Label>
                             <Form.Control type="password" ref={passwordConfirmRef} placeholder="Leave blank to keep the same"/>
                         </Form.Group>
-                        <Button disabled={loading} className="w-100" type="submit">update</Button>
+                        <br/>
+                        <div align="center">
+                        <Button disabled={loading} className="btn btn-dark btn-md btn-box w-25" type="submit">update</Button>
+                        </div>
                     </Form>
                 </Card.Body>
-            </Card>
+
             <div className="w-100 text-center mt-2">
                <Link to="/">cancel</Link>
             </div>
+                <br/>
+            </Card>
         </>
     )
 }

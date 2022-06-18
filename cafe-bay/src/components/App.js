@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Banner} from "./Banner/Banner";
-
 import{GlobalStyle} from "../styles/GlobalStyle";
-
-import firebase from 'firebase/compat/app';
 import "firebase/compat/auth";
 import Signup from "./Signup";
 import {Container} from "react-bootstrap";
@@ -47,7 +43,8 @@ function App() {
     const user = GetCurrentUser();
 
     const [totalProducts, setTotalProducts]=useState(0);
-    // getting cart products
+
+    //adding products from the cart into the db
     useEffect(()=>{
         auth.onAuthStateChanged(user=>{
             if(user){
@@ -62,21 +59,11 @@ function App() {
   return (
       <>
         <GlobalStyle/>
-
-
-
           <NavbarComp totalProducts={totalProducts}/>
-
-
-
           <Container
               className = "d-flex align-items-center justify-content-center"
               style={{ minHeight: "100vh"}}
           >
-              {/*<Router>*/}
-              {/*  */}
-              {/*</Router>*/}
-
           </Container>
 
         </>

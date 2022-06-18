@@ -8,22 +8,22 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from "./Modal";
 import {Banner} from "./Banner/Banner";
+import {formatPrice} from "./CoffeeData";
 
 toast.configure();
 
 export default function Cart(){
 
     const [showModal, setShowModal]=useState(false);
-
     const triggerModal=()=>{
         setShowModal(true);
     }
-
     const hideModal=()=>{
         setShowModal(false);
     }
 
     function GetCurrentUser(){
+
         const [user, setUser]=useState(null);
         useEffect(()=>{
             auth.onAuthStateChanged(user=>{
@@ -40,9 +40,8 @@ export default function Cart(){
         return user;
     }
 
-    const user = GetCurrentUser();
-
     const [cartProducts, setCartProducts]=useState([]);
+    const user = GetCurrentUser();
 
     useEffect(()=>{
         auth.onAuthStateChanged(user=>{
@@ -61,31 +60,28 @@ export default function Cart(){
         })
     },[])
 
-    //console.log(cartProducts);
 
     const qty = cartProducts.map(cartProduct=>{
         return cartProduct.qty;
     })
 
     const reducerOfQty = (accumulator, currentValue)=>accumulator+currentValue;
-
     const totalQty = qty.reduce(reducerOfQty,0);
-
 
     const price = cartProducts.map((cartProduct)=>{
         return cartProduct.TotalProductPrice;
     })
 
-    const reducerOfPrice = (accumulator,currentValue)=>accumulator+currentValue;
+    const priceReducer = (accumulator,currentValue)=>accumulator+currentValue;
 
-    const totalPrice = price.reduce(reducerOfPrice,0);
+    const totalPrice = price.reduce(priceReducer, 0);
 
     let Product;
 
-    const cartProductIncrease=(cartProduct)=>{
-        Product=cartProduct;
-        Product.qty=Product.qty+1;
-        Product.TotalProductPrice=Product.qty*Product.price;
+    const cartProductIncrease = (cartProduct) => {
+        Product = cartProduct;
+        Product.qty = Product.qty + 1;
+        Product.TotalProductPrice = Product.qty * Product.price;
 
         auth.onAuthStateChanged(user=>{
             if(user){
@@ -108,20 +104,20 @@ export default function Cart(){
             auth.onAuthStateChanged(user=>{
                 if(user){
                     fs.collection('Cart ' + user.uid).doc(cartProduct.ID).update(Product).then(()=>{
-                        console.log('decrement');
+                        console.log('reducing the number of products');
                     })
                 }
                 else{
-                    console.log('user is not logged in to decrement');
+                    console.log('the user is not logged to reduce the number of products');
                 }
             })
         }
     }
 
-    //credit card payment
+    //for credit card payment
     const navigate = useNavigate();
     const handleToken = async(token) => {
-      //  console.log(token)
+
         const cart = {name: 'All Products', totalPrice}
         const response = await axios.post('http://localhost:8080/checkout', {
             token,
@@ -132,13 +128,15 @@ export default function Cart(){
         if(status==='success'){
             navigate('/');
             toast.success('Your order has been placed successfully', {
-                position: 'top-right',
-                autoClose: 5000,
+
+                position: 'top-left',
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: false,
-                draggable: false,
                 progress: undefined,
+                draggable: false,
+
             });
             const uid = auth.currentUser.uid;
             const carts = await fs.collection('Cart ' + uid).get();
@@ -146,10 +144,9 @@ export default function Cart(){
                 await fs.collection('Cart ' + uid).doc(snap.id).delete();
             }
         }else{
-            alert('something went wrong in checkout')
+            alert('something went wrong in the checkout process')
         }
     }
-
 
     return(
         <>
@@ -164,38 +161,46 @@ export default function Cart(){
                         cartProductDecrease={cartProductDecrease}/>
 
                     </div>
-                    <div className='summary-box'>
-                        <h5>Cart Summary</h5>
-                        <br></br>
+                    <div className='order-summary'>
+                        <h4>Order Summary</h4>
+                        <hr/><br/>
                         <div>
-                            Total No of Products: <span>{totalQty}</span>
+                            quantity of products: <span>{totalQty}</span>
                         </div>
                         <div>
-                            Total Price to Pay: <span>{totalPrice}</span>
+                            total price: <span>{formatPrice(totalPrice)}</span>
                         </div>
-                        <br></br>
+                        <br/>
                         <StripeCheckout
                         stripeKey='pk_test_51L3e1PBJ6d9Rh1UOyowfB4XJSuwvHZU2YiEGXGkCCH1CKtTCBsp2jiBm22wNAbfAbTXCaKK2i89TjJZIb4JDugvG00TcG4l0HP'
                         token={handleToken}
                         billingAddress
                         shippingAddress
-                        name='All Products'
-                        amount={totalPrice * 100}
+                        name = 'Order'
+                        amount={formatPrice(totalPrice * 100)}
                         ></StripeCheckout>
                         <h6 className='text-center'
-                            style={{marginTop: 7+'px'}}>OR</h6>
-                        <button className='btn btn-secondary btn-md'
-                                onClick={()=>triggerModal()}>pay cash on delivery</button>
+                            style={{marginTop: 10+'px'}}>
+                            or
+                        </h6>
+                        <button className='btn btn-secondary btn-dark btn-md'
+                                onClick={() => triggerModal()}>
+                                pay cash on delivery
+                        </button>
                     </div>
                 </div>
             )}
             {cartProducts.length < 1 && (
-                <div className='container-fluid'>No products to show</div>
+                <div className='container-fluid'>
+                    <br/>
+                    <div className="alert-info">It seems like your cart is empty...</div>
+                </div>
             ) }
 
-            {showModal===true&&(
-                <Modal TotalPrice={totalPrice} totalQty={totalQty}
-                       hideModal={hideModal}
+            {showModal === true && (
+                <Modal
+                    TotalPrice = {formatPrice(totalPrice)} totalQty = {totalQty}
+                    hideModal = {hideModal}
                 />
             )}
         </>

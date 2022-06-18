@@ -30,13 +30,14 @@ background-color: ${warm_white};
 
 export default function IndividualOrderItem({cartProduct, cartProductIncrease, cartProductDecrease}){
 
-    const handleCartProductIncrease=()=>{
-        cartProductIncrease(cartProduct);
-    }
 
      const handleCartProductDecrease=()=>{
          cartProductDecrease(cartProduct);
      }
+
+    const handleCartProductIncrease=()=>{
+        cartProductIncrease(cartProduct);
+    }
 
     const handleCartProductDelete=()=>{
         auth.onAuthStateChanged(user=>{
@@ -54,17 +55,16 @@ export default function IndividualOrderItem({cartProduct, cartProductIncrease, c
                 <img src={cartProduct.url} alt="product-img"/>
             </div>
             <div align="center" className='product-text title'>{cartProduct.productName}</div>
-
             <div align="center" className='product-text price'>{formatPrice(cartProduct.price)}</div>
-
             <div align="center">
+
             <h6>Quantity</h6>
                 <div className='product-text quantity-box'>
                 <div className='action-btns minus' align="center" >
                     <IncrementButton onClick={handleCartProductDecrease}>-</IncrementButton>
                 </div>
                 <div>{cartProduct.qty}</div>
-                <div className='action-btns plus' >
+                <div className='action-buttons plus' >
                     <IncrementButton onClick={handleCartProductIncrease}>+</IncrementButton>
                 </div>
                 </div>
