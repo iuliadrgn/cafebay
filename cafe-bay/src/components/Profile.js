@@ -13,8 +13,11 @@ export default function Profile() {
         setError('')
 
         try {
-            await logout()
-            navigate('/login');
+
+            await logout();
+            navigate(-1);
+            window.location.reload(false);
+
         } catch {
             setError('failed to log out')
         }

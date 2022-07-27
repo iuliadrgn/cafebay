@@ -79,12 +79,12 @@ export default function Home(props){
     const navigate = useNavigate()
     let Product;
 
-    const addToCart = (product)=>{
+    const addToCart = (product) =>{
         if(uid!==null){
              console.log(product);
             Product=product;
             Product['qty']=1;
-            Product['TotalProductPrice']=Product.qty*Product.price;
+            Product['TotalProductPrice'] = Product.qty * Product.price;
             fs.collection('Cart ' + uid).doc(product.ID).set(Product).then(()=>{
                 console.log('successfully added to cart');
             })

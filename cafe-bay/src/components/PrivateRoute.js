@@ -3,7 +3,9 @@ import Navigate from "react";
 import {auth, fs} from "../contexts/firebase";
 import {Outlet} from "react-router-dom";
 import Home from "./Home";
+import {collapseToast, toast} from "react-toastify";
 
+toast.configure();
 
 export default function ProtectedRoutes() {
 
@@ -37,10 +39,16 @@ export default function ProtectedRoutes() {
             })
         },[])
         return user;
+
     }
 
     const user = GetCurrentUser();
     console.log(user);
+
+    if(user === false){
+       alert("you do not have permission to access this page");
+    }
+
     return user ? <Outlet/> : <Home/>
 }
 

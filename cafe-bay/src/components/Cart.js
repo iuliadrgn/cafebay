@@ -95,7 +95,7 @@ export default function Cart(){
         })
     }
 
-    const cartProductDecrease =(cartProduct)=>{
+    const cartProductDecrease = (cartProduct)=>{
         Product=cartProduct;
         if(Product.qty > 1){
             Product.qty=Product.qty-1;

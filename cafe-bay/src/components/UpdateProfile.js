@@ -4,6 +4,7 @@ import { useAuth} from "../contexts/AuthContext";
 import {Link, useNavigate} from "react-router-dom";
 import {auth, fs} from "../contexts/firebase";
 import {Banner} from "./Banner/Banner";
+import { doc, setDoc } from "firebase/firestore";
 
 
 export default function UpdateProfile(){
@@ -27,7 +28,7 @@ export default function UpdateProfile(){
         return uid;
     }
 
-    const uid = GetUserUid();
+
 
     function GetCurrentUser(){
         const [user, setUser]=useState(null);
@@ -45,7 +46,7 @@ export default function UpdateProfile(){
         },[])
         return user;
     }
-
+    const uid = GetUserUid();
     const user = GetCurrentUser();
 
 
@@ -61,13 +62,16 @@ export default function UpdateProfile(){
         if(emailRef.current.value !== currentUser.email){
 
           currentUser.updateEmail(emailRef.current.value);
-            fs.collection('users').doc(user.uid).set({
-                Email: emailRef}
+            fs.collection('users').doc(currentUser.uid).update({
+                Email: emailRef.current.value}
             )}
 
         if(passwordRef.current.value){
 
             currentUser.updatePassword(passwordRef.current.value)
+            fs.collection('users').doc(currentUser.uid).update({
+                Password: passwordRef.current.value}
+            )
         }
 
         Promise.all(promises).then(() =>{

@@ -255,6 +255,7 @@ link {
 @media(max-width: 540px){
     .filter-products-main-box{
         flex-direction: column;
+
     }
 }
 
@@ -265,6 +266,16 @@ link {
     align-items: center;
     justify-content: center;
 
+}
+
+.filter-products-main-box .product-img{
+    width: 150px;
+    height: 150px;
+}
+
+.filter-products-main-box .product-img img{
+    width: 100%;
+    height:100%;
 }
 
 @media(max-width: 540px){
